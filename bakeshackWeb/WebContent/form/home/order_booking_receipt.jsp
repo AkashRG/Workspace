@@ -59,6 +59,8 @@
 			</button>
 		</div>
 		<!--end::Toolbar-->
+		
+		<!--Test Commite-->
 	</div>
 	<!--end::Header Mobile-->
 	<div class="d-flex flex-column flex-root" style="bottom: 0;">
