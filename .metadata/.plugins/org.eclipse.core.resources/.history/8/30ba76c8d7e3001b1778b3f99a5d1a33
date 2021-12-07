@@ -1,0 +1,535 @@
+package com.bakeshack.api;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Types;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import com.config.ConnectionFactory;
+import com.customLog.Logger;
+public class ConnectDataBean {
+	
+	private ConnectionFactory cf = null;
+	String dbConnVar = "BAKESHACK";  
+	
+	public ConnectDataBean() {
+		cf = new ConnectionFactory(dbConnVar);
+	}
+	
+	public JSONObject getUsersDetails(String UserName, String Password) {
+		Connection con = null;
+		CallableStatement cs = null;
+		ResultSet rs = null;
+		
+		int result = 0;
+		JSONObject resultJSON = new JSONObject();
+		try {
+
+			con = cf.getConnection();
+			cs = con.prepareCall("{?=call fun_authenticate_user(?,?)}");
+			cs.registerOutParameter(1, Types.INTEGER);
+			cs.setString(2, UserName);
+			cs.setString(3, Password);
+			cs.execute();
+			result = cs.getInt(1);
+			
+			if(result<=0) {
+				
+				resultJSON.put("result",0);
+				resultJSON.put("msg","Login failed. Please enter valid username & password");
+				
+			}else {
+				resultJSON.put("result",1);
+				resultJSON.put("msg","Login Successfull");
+			}
+			
+		} catch (Exception e) {
+			Logger.log(dbConnVar, e);
+		} finally {
+			try {
+				if (con != null) {
+					con.close();
+				}
+				if (cs != null) {
+					cs.close();
+				}
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e1) {
+				Logger.log(dbConnVar, e1);
+			}
+		}
+
+		return resultJSON;
+	}
+
+	
+	public int crudCategory(String inputStr, String flag) {
+		Connection con = null;
+		CallableStatement cs = null;
+		int result = 0;
+		
+		try {
+
+			con = cf.getConnection();
+			cs = con.prepareCall("{? = call fun_crud_category_master(?,?)}");
+			cs.registerOutParameter(1, Types.INTEGER);
+			cs.setString(2, inputStr);
+			cs.setString(3, flag);
+			cs.execute();
+			result = cs.getInt(1);
+			
+		} catch (Exception e) {
+			Logger.log(dbConnVar, e);
+		} finally {
+			try {
+				if (con != null) {
+					con.close();
+				}
+				if (cs != null) {
+					cs.close();
+				}
+				
+			} catch (Exception e1) {
+				Logger.log(dbConnVar, e1);
+			}
+		}
+
+		return result;
+	}
+	
+	
+
+	public int crudSubCategory(String inputStr, String flag) {
+		Connection con = null;
+		CallableStatement cs = null;
+		int result = 0;
+		
+		try {
+
+			con = cf.getConnection();
+			cs = con.prepareCall("{? = call fun_crud_sub_category_master(?,?)}");
+			cs.registerOutParameter(1, Types.INTEGER);
+			cs.setString(2, inputStr);
+			cs.setString(3, flag);
+			cs.execute();
+			result = cs.getInt(1);
+			
+		} catch (Exception e) {
+			Logger.log(dbConnVar, e);
+		} finally {
+			try {
+				if (con != null) {
+					con.close();
+				}
+				if (cs != null) {
+					cs.close();
+				}
+				
+			} catch (Exception e1) {
+				Logger.log(dbConnVar, e1);
+			}
+		}
+
+		return result;
+	}
+	
+	
+	
+
+	public int crudUnit(String inputStr, String flag) {
+		Connection con = null;
+		CallableStatement cs = null;
+		int result = 0;
+		
+		try {
+
+			con = cf.getConnection();
+			cs = con.prepareCall("{? = call fun_crud_unit_master(?,?)}");
+			cs.registerOutParameter(1, Types.INTEGER);
+			cs.setString(2, inputStr);
+			cs.setString(3, flag);
+			cs.execute();
+			result = cs.getInt(1);
+			
+		} catch (Exception e) {
+			Logger.log(dbConnVar, e);
+		} finally {
+			try {
+				if (con != null) {
+					con.close();
+				}
+				if (cs != null) {
+					cs.close();
+				}
+				
+			} catch (Exception e1) {
+				Logger.log(dbConnVar, e1);
+			}
+		}
+
+		return result;
+	}
+	
+	
+	
+
+	public int crudProduct(String inputStr, String flag) {
+		Connection con = null;
+		CallableStatement cs = null;
+		int result = 0;
+		
+		try {
+
+			con = cf.getConnection();
+			cs = con.prepareCall("{? = call fun_crud_product_master(?,?)}");
+			cs.registerOutParameter(1, Types.INTEGER);
+			cs.setString(2, inputStr);
+			cs.setString(3, flag);
+			cs.execute();
+			result = cs.getInt(1);
+			
+		} catch (Exception e) {
+			Logger.log(dbConnVar, e);
+		} finally {
+			try {
+				if (con != null) {
+					con.close();
+				}
+				if (cs != null) {
+					cs.close();
+				}
+				
+			} catch (Exception e1) {
+				Logger.log(dbConnVar, e1);
+			}
+		}
+
+		return result;
+	}
+	
+	
+	
+	public JSONObject retrieveCategory() {
+		Connection con = null;
+		CallableStatement cs = null;
+		ResultSet rs = null;
+		
+		JSONObject resultjson = new JSONObject();
+		int category_id;
+		String category_code;
+		String category_name;
+		String inventory_flag;
+		String sale_flag;
+		
+		JSONArray jsonArray = new JSONArray();
+		
+		try {
+
+			con = cf.getConnection();
+			cs = con.prepareCall("{?=call fun_retrieve_category_master(?)}");
+			cs.registerOutParameter(1, Types.OTHER);
+			cs.setObject(2, rs);
+			con.setAutoCommit(false);
+			cs.execute();
+			rs = (ResultSet) cs.getObject(1);
+
+			if (rs.next()) {
+				
+				do {
+		
+				category_id    = rs.getInt(1);
+				category_code  = rs.getString(2);
+				category_name  = rs.getString(3);
+				inventory_flag = rs.getString(4);
+				sale_flag      = rs.getString(5);
+				
+				JSONObject obj = new JSONObject();
+				
+				obj.put("category_id",category_id);
+				obj.put("category_code",category_code);
+				obj.put("category_name",category_name);
+				obj.put("inventory_flag",inventory_flag);
+				obj.put("sale_flag",sale_flag);
+				
+				jsonArray.put(obj);
+			
+				} while (rs.next());
+				 
+				resultjson.put("result", "0");
+				resultjson.put("data", jsonArray);
+
+			} else {
+				
+				resultjson.put("result", "1");
+				
+			} 
+				
+			  
+			
+		} catch (Exception e) {
+			Logger.log(dbConnVar, e);
+		} finally {
+			try {
+				if (con != null) {
+					con.close();
+				}
+				if (cs != null) {
+					cs.close();
+				}
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e1) {
+				Logger.log(dbConnVar, e1);
+			}
+		}
+
+		return resultjson;
+	}
+	
+	
+	
+	public JSONObject retrieveSubCategory() {
+		Connection con = null;
+		CallableStatement cs = null;
+		ResultSet rs = null;
+		
+		JSONObject resultjson = new JSONObject();
+		int category_id;
+		int sub_category_id;
+		String sub_category_desc;
+		
+		JSONArray jsonArray = new JSONArray();
+		
+		try {
+
+			con = cf.getConnection();
+			cs = con.prepareCall("{?=call fun_retrieve_subcategory_master(?)}");
+			cs.registerOutParameter(1, Types.OTHER);
+			cs.setObject(2, rs);
+			con.setAutoCommit(false);
+			cs.execute();
+			rs = (ResultSet) cs.getObject(1);
+
+			if (rs.next()) {
+				
+				do {
+		
+				sub_category_id   = rs.getInt(1);
+				category_id       = rs.getInt(2);
+				sub_category_desc = rs.getString(3);
+								
+				JSONObject obj = new JSONObject();
+				
+				obj.put("sub_category_id",sub_category_id);
+				obj.put("category_id",category_id);
+				obj.put("sub_category_desc",sub_category_desc);
+				
+				jsonArray.put(obj);
+			
+				} while (rs.next());
+				 
+				resultjson.put("result", "0");
+				resultjson.put("data", jsonArray);
+
+			} else {
+				
+				resultjson.put("result", "1");
+				
+			} 
+				
+			  
+			
+		} catch (Exception e) {
+			Logger.log(dbConnVar, e);
+		} finally {
+			try {
+				if (con != null) {
+					con.close();
+				}
+				if (cs != null) {
+					cs.close();
+				}
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e1) {
+				Logger.log(dbConnVar, e1);
+			}
+		}
+
+		return resultjson;
+	}
+	
+	
+	public JSONObject retrieveUnit() {
+		Connection con = null;
+		CallableStatement cs = null;
+		ResultSet rs = null;
+		
+		JSONObject resultjson = new JSONObject();
+		int unit_id;
+		String unit_type;
+		String short_form;
+		
+		
+		JSONArray jsonArray = new JSONArray();
+		
+		try {
+
+			con = cf.getConnection();
+			cs = con.prepareCall("{?=call fun_retrieve_unit_master(?)}");
+			cs.registerOutParameter(1, Types.OTHER);
+			cs.setObject(2, rs);
+			con.setAutoCommit(false);
+			cs.execute();
+			rs = (ResultSet) cs.getObject(1);
+
+			if (rs.next()) {
+				
+				do {
+		
+					unit_id    = rs.getInt(1);
+					unit_type  = rs.getString(2);
+					short_form = rs.getString(3);
+								
+					JSONObject obj = new JSONObject();
+					
+					obj.put("unit_id",unit_id);
+					obj.put("unit_type",unit_type);
+					obj.put("short_form",short_form);
+					
+					jsonArray.put(obj);
+			
+				} while (rs.next());
+				 
+				resultjson.put("result", "0");
+				resultjson.put("data", jsonArray);
+
+			} else {
+				
+				resultjson.put("result", "1");
+				
+			} 
+				  
+			
+		} catch (Exception e) {
+			Logger.log(dbConnVar, e);
+		} finally {
+			try {
+				if (con != null) {
+					con.close();
+				}
+				if (cs != null) {
+					cs.close();
+				}
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e1) {
+				Logger.log(dbConnVar, e1);
+			}
+		}
+
+		return resultjson;
+	}
+	
+	
+	
+	public JSONObject retrieveProduct() {
+		Connection con = null;
+		CallableStatement cs = null;
+		ResultSet rs = null;
+		
+		JSONObject resultjson = new JSONObject();
+
+		int product_id;
+		String product_name;
+		String product_desc;
+		String product_code;
+		int sub_category_id;
+		double price;
+		int unit_id;
+		int unit;
+		String product_image;	
+		
+		JSONArray jsonArray = new JSONArray();
+		
+		try {
+
+			con = cf.getConnection();
+			cs = con.prepareCall("{?=call fun_retrieve_product_master(?)}");
+			cs.registerOutParameter(1, Types.OTHER);
+			cs.setObject(2, rs);
+			con.setAutoCommit(false);
+			cs.execute();
+			rs = (ResultSet) cs.getObject(1);
+
+			if (rs.next()) {
+				
+				do {
+		
+					product_id       = rs.getInt(1);
+					product_name     = rs.getString(2);
+					product_desc     = rs.getString(3);
+					product_code     = rs.getString(4);
+					sub_category_id  = rs.getInt(5);
+					price			 = rs.getDouble(6);
+					unit_id			 = rs.getInt(7);
+					unit			 = rs.getInt(8);
+					product_image    = rs.getString(9);
+								
+					JSONObject obj = new JSONObject();
+					
+					obj.put("product_id",product_id);
+					obj.put("product_name",product_name);
+					obj.put("product_desc",product_desc);
+					obj.put("product_code",product_code);
+					obj.put("sub_category_id",sub_category_id);
+					obj.put("price",price);
+					obj.put("unit_id",unit_id);
+					obj.put("unit",unit);
+					obj.put("product_image",product_image);
+					jsonArray.put(obj);
+			
+				} while (rs.next());
+				 
+				resultjson.put("result", "0");
+				resultjson.put("data", jsonArray);
+
+			} else {
+				
+				resultjson.put("result", "1");
+				
+			} 
+				  
+			
+		} catch (Exception e) {
+			Logger.log(dbConnVar, e);
+		} finally {
+			try {
+				if (con != null) {
+					con.close();
+				}
+				if (cs != null) {
+					cs.close();
+				}
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e1) {
+				Logger.log(dbConnVar, e1);
+			}
+		}
+
+		return resultjson;
+	}
+
+
+
+}

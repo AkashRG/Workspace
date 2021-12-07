@@ -1,0 +1,6 @@
+#Tomcat publish data
+#Tue Dec 07 13:07:47 IST 2021
+org.eclipse.jst.jee.server\:doctorsFriend=D\:\\apache-tomcat-9.0.37\\webapps\\doctorsFriend
+org.eclipse.jst.jee.server\:bakeshackWeb=D\:\\apache-tomcat-9.0.37\\webapps\\bakeshackWeb
+org.eclipse.jst.jee.server\:dssAPI=D\:\\apache-tomcat-9.0.37\\webapps\\dssAPI
+org.eclipse.jst.jee.server\:bakeshackAPI=D\:\\apache-tomcat-9.0.37\\webapps\\bakeshackAPI

@@ -1,0 +1,128 @@
+package com.bakeshack.api;
+
+import javax.ws.rs.Path;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
+import javax.ws.rs.POST;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+import org.json.JSONObject;
+
+import com.customLog.*;
+
+@Path("/api")
+public class ConnectAPI {
+
+	//Unit Master
+
+	@POST
+		@Path("/insertUpdateUnit")
+		@Produces(MediaType.TEXT_PLAIN)
+		@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+		public int insertUpdateUnit(String unit_desc, String unit_code,int unit_id, int flag) { 
+			ConnectDataBean bean= null;
+			int beanData = 0;
+			try { 
+				System.out.println("unit_desc in API : " + unit_desc);
+				
+				Logger.log("BAKESHACK","unit_desc:: " + unit_desc + "unit_code" + unit_code+"unit_id"+unit_id);
+			
+				bean = new ConnectDataBean();
+				beanData = bean.insertUpdatUnit(unit_desc, unit_code, unit_id, flag);
+				Logger.log("BAKESHACK","beandata:: "+beanData);
+				
+				if(beanData>0) {
+					
+				}
+			} catch (Exception e) {
+				System.out.println(e);
+				Logger.log("BAKESHACK", e);
+			}
+
+			return beanData;
+		}
+
+	@POST
+		@Path("/getUnitDetails")
+		@Produces(MediaType.TEXT_PLAIN)
+		@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+		public String getUnitDetails() { 
+			
+			ConnectDataBean bean= null;
+			String beanData = null;
+			try { 
+				System.out.println("getUnitDetails");
+				
+				bean = new ConnectDataBean();
+				beanData = bean.getUnitDetails().toString();
+				Logger.log("BAKESHACK","beandata:: "+beanData);
+												
+			} catch (Exception e) {
+				System.out.println(e);
+				Logger.log("BAKESHACK", e);
+			}
+
+			return beanData;
+	}
+
+
+	//Product  Master
+
+	@POST
+		@Path("/insertUpdateProduct")
+		@Produces(MediaType.TEXT_PLAIN)
+		@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+		public int insertUpdateProductDetails(String product_code, String subcategory,String product_desc,String selling_price,String unit,int product_id, int flag) { 
+			ConnectDataBean bean= null;
+			int beanData = 0;
+			try { 
+				System.out.println("I am here");
+				
+				Logger.log("BAKESHACK","product_code:: "+product_code + "subcategory" + subcategory+"product_desc"+product_desc+"selling_price"+selling_price+"unit"+unit+"product_id"+product_id);
+			
+				bean = new ConnectDataBean();
+				beanData = bean.insertUpdatProduct(product_code,subcategory,product_desc,selling_price,unit,product_id, flag);
+				Logger.log("BAKESHACK","beandata:: "+beanData);
+				
+				if(beanData>0) {
+					
+				}
+			} catch (Exception e) {
+				System.out.println(e);
+				Logger.log("BAKESHACK", e);
+			}
+
+			return beanData;
+		}
+
+	@POST
+		@Path("/getProductDetails")
+		@Produces(MediaType.TEXT_PLAIN)
+		@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+		public String getProductDetails() { 
+			
+			ConnectDataBean bean= null;
+			String beanData = null;
+			try { 
+				System.out.println("getProductDetails");
+				
+				bean = new ConnectDataBean();
+				beanData = bean.getProductDetails().toString();
+				Logger.log("BAKESHACK","beandata:: "+beanData);
+												
+			} catch (Exception e) {
+				System.out.println(e);
+				Logger.log("BAKESHACK", e);
+			}
+
+			return beanData;
+	}
+
+
+
+	 
+
+
+}

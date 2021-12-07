@@ -1,0 +1,516 @@
+<%@page import="com.config.FaceConfig"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java"
+	import="java.util.*,com.config.ConnectionFactory,com.config.I18nUtility,com.customLog.Logger,com.faces.VO_Face"%>
+
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+	String base = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+	String dbConnVar = "BAFNA";
+	try {
+%>
+
+
+<jsp:include page="../common/header.jsp"></jsp:include>
+
+
+
+
+<body id="kt_body"
+	class="quick-panel-right demo-panel-right offcanvas-right header-fixed header-mobile-fixed aside-enabled aside-static page-loading">
+	<jsp:include page="/form/common/mobile-header.jsp"></jsp:include>
+	<div class="d-flex flex-column flex-root">
+		<!--begin::Page-->
+		<div class="d-flex flex-row flex-column-fluid page">
+			<!--begin::Aside-->
+			<jsp:include page="/form/common/sidebar.jsp"></jsp:include>
+			<!--end::Aside-->
+			<!--begin::Wrapper-->
+			<div class="d-flex flex-column flex-row-fluid wrapper"
+				id="kt_wrapper">
+				<!--begin::Header-->
+				<jsp:include page="/form/common/navbar.jsp"></jsp:include>
+				<!--end::Header-->
+				<!--begin::Content-->
+				<div class="content d-flex flex-column flex-column-fluid"
+					id="kt_content">
+					<!--begin::Entry-->
+					<div class="d-flex flex-column-fluid">
+						<!--begin::Container-->
+						<div class="container">
+
+							<h2
+								class="d-flex align-items-center text-dark font-weight-bold my-1 mr-3">Generate
+								Certificate</h2>
+
+							<div class="row">
+								<div class="col-xl-6">
+									<div class="card card-custom gutter-b">
+										<div class="card-body">
+											<div class="example mb-10">
+												<div class="example-preview">
+													<div class="card card-custom">
+														<form class="form" id="kt_form_1">
+															<div class="card-body">
+																<div class="form-group">
+																	<label>Select Certificate</label><span
+																		class="text-danger">*</span> <select
+																		class="form-control form-control-solid"
+																		name="cert_code" id="cert_code">
+																		<option value="" disabled selected hidden>Select
+																			Certificate</option>
+																		<option value="fit">Fit Certificate</option>
+																		<option value="unfit">Unfit Certificate</option>
+																		<option value="ref_letter">Reference Letter</option>
+																	</select>
+																</div>
+
+																<div id="cert_form">
+																	<div class="form-group">
+																	<label>Patient Name</label><span
+																		class="text-danger">*</span> <input type="text"
+																		name="patient_code" id="patient_code"
+																		class="form-control form-control-solid"
+																		placeholder="Enter Patient name" />
+																</div>
+																
+																<div id="in_ref">
+																	<div class="form-group">
+																	<label>Ref. Doctor Name</label><span
+																		class="text-danger">*</span> <input type="text"
+																		name="ref_dr" id="ref_dr"
+																		class="form-control form-control-solid"
+																		placeholder="Enter Dr name" />
+																</div>
+																
+																<div class="form-group">
+																	<label>Extra Content</label>
+																	<Textarea id="extra_content"
+																		class="form-control" rows="5">
+																	</Textarea>
+																</div>
+																</div>
+
+																<div id="not_in_ref">
+																	<div class="form-group">
+																		<label>Age</label> <input type="number" name="age"
+																			id="age" class="form-control form-control-solid"
+																			placeholder="Enter Age" />
+																	</div>
+
+																	<div class="form-group">
+																		<label>Residence </label> <input type="text"
+																			name="residence" id="residence"
+																			class="form-control form-control-solid"
+																			placeholder="Enter Residence" />
+																	</div>
+
+																	<div class="form-group">
+																		<label>Date</label><span class="text-danger">*</span>
+																		<input class="form-control" id="date" readonly
+																			placeholder="Select date range" type="text" />
+																	</div>
+
+
+																	<div class="form-group">
+																		<label class="rest_label">Date/Days</label><span class="text-danger">*</span>
+																		<input 
+																			type='number' class="form-control"
+																			id="rest_days" placeholder="Enter Rest Days" /> 
+																		<input
+																			type='text' class="form-control" id="rest_date"
+																			placeholder="Enter Resume Date" readonly/>
+																	</div>
+																</div>
+
+																<div class="form-group">
+																	<label>Complaint</label><span class="text-danger">*</span>
+																	<select class="form-control form-control-solid"
+																		name="complaint_name" id="complaint_name">
+																		<option value="" disabled selected hidden>Select
+																			Complaint</option>
+																	</select>
+																</div>
+
+																<div class="form-group">
+																	<input type="text"
+																		class="form-control form-control-solid form-control-lg"
+																		id="complaint_desc" />
+																</div>
+																</div>
+
+															</div>
+															<div class="text-center">
+																<button type="submit" id="addCertParam"
+																	class="btn btn-primary mr-2">Submit</button>
+																<button type="submit" id="updateCertParam"
+																	class="btn btn-primary mr-2">Update</button>
+																<button type="reset" class="btn btn-secondary">Cancel</button>
+															</div>
+														</form>
+														<!--end::Form-->
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+
+                                
+								<div class="col-xl-6 mt-5" id="cert">
+                               
+										
+											<div class="row text-info">
+											
+												<img id="logo" alt="Logo" src="<%=VO_Face.getContainerDeployPath()%>/ResourceBundles/Resources/assets/gif/src.png" class="logo-default max-h-100px" />
+												
+											
+												<div class="col-md-8 text-center">
+													<h1 class="font-weight-bolder" style="font-size: 25px;">SHREE RAJENDRA CLINIC</h1>
+														
+													<div class="text-right">
+												
+														<h3>Dr. Rakesh F. Bafna</h3>
+														<p style="font-size:10px">B.H.M.S(Reg No. 27450)</p>
+												
+													</div>
+														
+													<h5>पोयनाड : भाजी मार्केट गल्ली</h5>
+													<h5 class="ml-2 font-weight-bolder">7775999536 | 9822786831(Whatsapp)</h5>
+												</div>										
+												
+											</div>
+
+											<div class="border-bottom bg-info w-100"></div>
+											<div class="border-bottom bg-info w-100"></div>
+											<div class="border-bottom bg-info w-100 mb-10"></div>
+
+										
+                               
+                               
+
+									<div class="cert_header  text-center">
+
+										<h1 id="cert_name"></h1>
+											
+										    
+									</div>
+
+
+									<div id="fit">
+
+										<div class="content font-size-h3">
+
+											<p class="">
+												This is to certify that <span class="setPatient_name"> ... 
+													 </span> age <span class="setAge"> ... </span>
+												residence <span class="setResidence"> ... </span>
+												was under my treatment from Date <span class="setDate"> ... till ... </span>.
+											</p>
+											<p class="my-5">
+												He / She was suffering from <span class="setComplaint"> ... </span>
+												and was advised to take rest.
+											</p>
+											<p class="">
+												Now he is fit to resume normal work from Date <span
+													class="setRest_date"> ... </span>.
+											</p>
+
+										</div>
+
+									</div>
+
+
+									<div id="unfit">
+
+
+										<div class="content font-size-h3">
+
+											<p class="">
+												This is to certify that <span class="setPatient_name"> ... 
+													  </span> age <span class="setAge"> ... </span>
+												residence <span class="setResidence"> ... </span>
+												was under my treatment from Date <span class="setDate"> ... till ... </span>.
+											</p>
+											<p class="my-5">
+												He / She was suffering from <span class="setComplaint"> ... </span>
+												and was advised to take rest.
+											</p>
+											<p class="">
+												He is advised to take rest for <span class="setRest_days"> ... </span>
+												days or till recovery.
+											</p>
+
+										</div>
+
+									</div>
+
+									<div id="ref_letter">
+
+										<div class="content font-size-h3">
+
+											<h4>Respected Sir / Madam,</h4>
+
+											<h4>
+												Dr. <span id="setRef_dr"> ... </span>.
+											</h4>
+
+											</br>
+
+											<p class="">
+												Referring here with <span class="setPatient_name"> ... </span>
+												 complaining of <span
+													class="setComplaint"> ... </span>, for
+												your kind consultation, management and investigation.
+											</p>
+											<p id="setExtra_content"></p>
+											<p class="mt-5">Please examine the patient and do the needful.</p>
+
+										</div>
+
+									</div>
+
+									<div class="cert_footer text-right">
+
+										<h4>Signature.</h4>
+										</br>
+										<h4>Dr. Rakesh Bafna.</h4>
+
+
+									</div>
+
+
+									<div
+										class="row justify-content-center py-8 px-8 py-md-10 px-md-0">
+										<div class="d-flex justify-content-end">
+											<button type="button"
+												class="btn btn-primary font-weight-bold" id="print">
+												Print Certificate</button>
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+						<!--end::Container-->
+					</div>
+					<!--end::Entry-->
+				</div>
+				<!--end::Content-->
+				<!--begin::Footer-->
+				<jsp:include page="../common/footer.jsp"></jsp:include>
+				<!--end::Footer-->
+			</div>
+			<!--end::Wrapper-->
+		</div>
+		<!--end::Page-->
+	</div>
+	<!--end::Main-->
+
+	<jsp:include page="../common/jsfiles.jsp"></jsp:include>
+
+	<script type="text/javascript">
+	
+	$('#cert').hide();
+	$('#cert_form').hide();
+	
+	$('#patient_code').change(function(){
+		var value = $(this).val();
+		$('.setPatient_name').text(value).css({"font-weight": "500", "text-decoration": "underline"});
+	})
+	
+	$('#age').change(function(){
+		var value = $(this).val();
+		$('.setAge').text(value).css({"font-weight": "500", "text-decoration": "underline"});
+	})
+	
+	$('#date').change(function(){
+		console.log('value');
+		var value = $(this).val();
+		console.log('value');
+		$('.setDate').text(value).css({"font-weight": "500", "text-decoration": "underline"});
+	})
+	
+	$('#residence').change(function(){
+		var value = $(this).val();
+		$('.setResidence').text(value).css({"font-weight": "500", "text-decoration": "underline"});
+	})
+	
+	$('#rest_days').change(function(){
+		var value = $(this).val();
+		$('.setRest_days').text(value).css({"font-weight": "500", "text-decoration": "underline"});
+	})
+	
+	$('#rest_date').change(function(){
+		var value = $(this).val();
+		$('.setRest_date').text(value).css({"font-weight": "500", "text-decoration": "underline"});
+	})
+	
+	$('#ref_dr').change(function(){
+		var value = $(this).val();
+		$('#setRef_dr').text(value).css({"font-weight": "500", "text-decoration": "underline"});
+	})
+	
+	$('#extra_content').change(function(){
+		var value = $(this).val();
+		$('#setExtra_content').text(value);
+	})
+		
+	
+	$('#cert_code').change(function(){
+	
+		var cert_code = $(this).val();
+		$('#cert_form').show();
+		$('#cert').show();
+		console.log(cert_code);
+		
+		if(cert_code == 'fit'){
+			$('#cert_name').text('Fitness Certificate')
+			$('#unfit').hide();
+			$('#ref_letter').hide();
+			$('#rest_days').hide();
+			$('#rest_date').show();
+			$('.rest_label').text("Resume Date");
+			$('#fit').show();
+			$('#not_in_ref').show();
+			$('#in_ref').hide();
+		}
+		
+		if(cert_code == 'unfit'){
+			$('#cert_name').text('Fitness Certificate')
+			$('#fit').hide();
+			$('#ref_letter').hide();
+			$('#rest_date').hide();
+			$('#rest_days').show();
+			$('.rest_label').text("Rest Days");
+			$('#unfit').show();
+			$('#not_in_ref').show();
+			$('#in_ref').hide();
+		}
+		
+		if(cert_code == 'ref_letter'){
+			$('#cert_name').text('Reference Letter')
+			$('#fit').hide();
+			$('#unfit').hide();
+			$('#not_in_ref').hide();
+			$('#in_ref').show();
+			$('#ref_letter').show();
+		}
+		
+	})
+	
+	
+	
+	
+	
+	
+	var basePath='<%=basePath%>';    
+	var base='<%=base%>';
+	
+	$('#complaint_desc').hide();
+
+	$.ajax({
+		url : base + "/dssAPI/dfapi/getComplaints",
+		type : "post",
+		dataType : "json",
+		async : false,
+		data : {"flag":1},
+		success:function(data)
+        {
+			data.forEach((element)=> {
+				
+			        $('#complaint_name').append($(document.createElement('option')).prop({
+		                value: element.complaint_desc,
+		                text: element.complaint_name
+		            }))
+				
+			});   
+        }
+	});	
+	
+	$('#complaint_name').change(function(){
+ 		
+	 	$('#complaint_desc').show();
+	 	
+	 	var complaint_name = $(this).val();
+		$('#complaint_desc').val(complaint_name); 
+ 	});
+	
+	$('#complaint_desc, #complaint_name').change(function(){
+ 			 	
+	 	var complaint_desc = $(this).val();
+		$('.setComplaint').text(complaint_desc).css({"font-weight": "500", "text-decoration": "underline"});
+ 	});
+
+		$('#updateCertParam').hide();
+		$("#addCertParam").show();
+
+		
+		var KTBootstrapDaterangepicker = function() {
+
+			// Private functions
+			var demos = function() {
+				// minimum setup
+				$('#date').daterangepicker({
+					buttonClasses : ' btn',
+					applyClass : 'btn-primary',
+					cancelClass : 'btn-secondary',
+					locale: {
+					    format: 'DD/MM/YYYY'
+					   }
+				});
+				
+				
+				$('#rest_date').datepicker({
+					   rtl: KTUtil.isRTL(),
+					   todayHighlight: true,
+					   orientation: "bottom left",
+						
+						    format: 'dd/mm/yyyy'
+						   
+					  });
+
+			}
+
+			return {
+				// public functions
+				init : function() {
+					demos();
+				}
+			};
+		}();
+
+		jQuery(document).ready(function() {
+			KTBootstrapDaterangepicker.init();
+		});
+		
+		
+		
+		$("#print").click(function () {
+			$(this).hide();
+			$( "p" ).css( "fontSize", "27px" ); 
+			$( "h4" ).css( "fontSize", "32px" );
+			$( "h1" ).css( "fontSize", "40px" );
+		    $("#cert").print();
+		});
+		
+		
+	</script>
+
+	<script type="text/JavaScript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jQuery.print/1.6.0/jQuery.print.js"></script>
+
+</body>
+</html>
+
+<%
+	} catch (Exception e) {
+		Logger.log(dbConnVar, "" + e);
+	}
+%>
+
+
+

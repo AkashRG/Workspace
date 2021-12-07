@@ -1,0 +1,875 @@
+
+<%@page import="com.config.FaceConfig"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java"
+	import="java.util.*,com.config.ConnectionFactory,com.config.I18nUtility,com.customLog.Logger,com.faces.VO_Face"%>
+
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+	String base = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+	String dbConnVar = "BAKESHACk";
+	try {
+%>
+
+
+<jsp:include page="../common/header.jsp"></jsp:include>
+
+
+
+
+
+<body id="kt_body"
+	class="quick-panel-right demo-panel-right offcanvas-right header-fixed header-mobile-fixed aside-enabled aside-static page-loading">
+	<jsp:include page="/form/common/mobile-header.jsp"></jsp:include>
+	<div class="d-flex flex-column flex-root">
+		<!--begin::Page-->
+		<div class="d-flex flex-row flex-column-fluid page">
+			<!--begin::Aside-->
+			<jsp:include page="/form/common/sidebar.jsp"></jsp:include>
+			<!--end::Aside-->
+			<!--begin::Wrapper-->
+			<div class="d-flex flex-column flex-row-fluid wrapper"
+				id="kt_wrapper">
+				<!--begin::Header-->
+				<jsp:include page="/form/common/navbar.jsp"></jsp:include>
+				<!--end::Header-->
+				<!--begin::Content-->
+				<div class="content d-flex flex-column flex-column-fluid"
+					id="kt_content">
+					<!--begin::Entry-->
+					<div class="d-flex flex-column-fluid">
+						<!--begin::Container-->
+						<div class="container">
+
+							<div class="d-flex mt-10">
+							
+							
+							
+							
+								<div class="col-md-5 d-flex align-items-center">
+								
+								<!-- Modal-->
+									<div class="modal fade" id="addCustomer" tabindex="-1"
+										role="dialog" aria-labelledby="exampleModalLabel"
+										aria-hidden="true">
+										<div class="modal-dialog" role="document">
+											<div class="modal-content">
+
+												<div class="modal-body">
+													<div class="form-group row">
+														<label class="col-3 col-form-label">Customer Name
+															<span class="text-danger">*</span>
+														</label>
+														<div class="col-7">
+															<input class="form-control form-control-solid"
+																type="text" id="customer_name" required />
+														</div>
+													</div>
+													<div class="form-group row">
+														<label class="col-3 col-form-label">Mobile No</label>
+														<div class="col-7">
+															<input class="form-control form-control-solid"
+																type="number" id="mobile_no" />
+														</div>
+													</div>
+													<div class="form-group row">
+
+														<div class="col-7">
+															<input class="form-control form-control-solid"
+																type="hidden" id="customer_id" />
+														</div>
+													</div>
+
+													<div class="text-right">
+														<button type="submit" id="add_Customer"
+															class="btn btn-primary mr-2 font-weight-bold">Submit</button>
+													</div>
+												</div>
+
+											</div>
+										</div>
+									</div>
+
+
+
+									<button type="button"
+										class="btn btn-primary font-weight-bold font-size-h3 px-10 py-4 offset-xl-2"
+										data-toggle="modal" data-target="#addCustomer">
+
+										<i class="flaticon-plus"></i> Customer
+									</button>
+                            
+
+									<div>
+										<h4 id="cust_name"></h4>
+										<h5 id="mobile_no" class="text-muted"></h5>
+									</div>
+
+								</div>
+								<div class="order-details col-md-6">
+									<div class="form-group row">
+										<label class="col-3 col-form-label">Date of Order</label>
+										<div class="col-9">
+											<input class="form-control form-control-solid" type="date"
+												id="date_of_order" />
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label class="col-3 col-form-label">Date of Delivery</label>
+										<div class="col-9">
+											<input class="form-control form-control-solid" type="date"
+												id="date_of_delivery" />
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label class="col-3 col-form-label">Order No</label>
+										<div class="col-9">
+											<input class="form-control form-control-solid" type="text"
+												id="order_code" />
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="border-bottom bg-gray-400 w-100"></div>
+
+							<div class="my-10 offset-xl-1 d-flex align-items-center">
+							
+								<h2>Product Detail</h2>
+								
+							</div>
+							
+							
+							<div class="col-xl-10 offset-xl-1 mt-10">
+								<div class="card card-custom gutter-b">
+									<div class="card-body">
+										<!--begin: Datatable-->
+										
+										<div class="card-body">
+										<div id="kt_repeater_1">
+											<div class="form-group row">
+												<div data-repeater-list="productList" class="col-lg-12">
+													<div data-repeater-item
+														class="form-group row align-items-center">
+														<div>
+															<label>No:</label>
+															<p></p>
+															<h6>1</h6>
+															<div class="d-md-none mb-2"></div>
+														</div>
+														<div class="col-md-3">
+															<label>product</label>
+															 <select class="form-control" name="productName" id="productName">
+															 	<option value="" disabled selected hidden>product Name</option>
+															 </select>
+															<div class="d-md-none mb-2"></div>
+														</div>
+														<div class="col-md-2">
+															<label>Rate:</label>
+															<input type="text" class="form-control" name="rate" id="rate">
+																<option value="" disabled selected hidden>Rate</option>
+															 
+															<div class="d-md-none mb-2"></div>
+														</div>
+														<div class="col-md-2">
+															<label>Quantity:</label>
+															<input type="text" class="form-control" name="quantity" id="quantity">
+																<option value="" disabled selected hidden>Quantity</option>
+															
+															<div class="d-md-none mb-2"></div>
+														</div>
+																																
+														<div class="mt-7">
+															<a href="javascript:;" data-repeater-delete=""
+																class="btn font-weight-bold btn-danger btn-icon btn-light-danger">
+																<i class="la la-trash-o"></i>
+															</a>
+														</div>
+													</div>
+												</div>
+											</div>
+											
+												<div class="mr-5">
+													<a href="javascript:;" 
+														class="btn btn-sm font-weight-bolder btn-primary">
+														<i class="la la-plus" id="addProduct" ></i>Add
+													</a>
+													<div class="text-center">
+															<button type="submit" id="add_Product"
+																class="btn btn-primary mr-2">Submit</button>
+																</div>
+								
+												</div>
+										  </div>
+									</div>
+										
+							
+							
+                                      
+							<div class="mt-20 col-md-6 offset-md-1">
+
+								<div class="form-group row">
+									<label class="col-4 col-form-label">Discount</label>
+									<div class="col-8">
+										<input class="form-control form-control-solid" type="text"
+											id="discount" />
+									</div>
+								</div>
+
+								<div class="form-group row">
+									<label class="col-4 col-form-label">Subtotal</label>
+									<div class="col-8">
+										<input class="form-control form-control-solid" type="text"
+											id="sub_total" readonly />
+									</div>
+								</div>
+
+								<div class="border-bottom bg-gray-400 w-100 mb-5"></div>
+
+								<div class="form-group row">
+									<label class="col-4 col-form-label">Total</label>
+									<div class="col-8">
+										<input class="form-control form-control-solid" type="text"
+											id="total"  readonly/>
+									</div>
+								</div>
+
+							</div>
+
+							<div class="border-bottom bg-gray-400 w-100"></div>
+
+							<div class="col-xl-10 offset-xl-1 mt-10">
+								<div class="card card-custom gutter-b">
+									<div class="card-body">
+										<!--begin: Datatable-->
+										<div
+											class="datatable datatable-bordered datatable-head-custom"
+											id="kt_datatable1"></div>
+										<!--end: Datatable-->
+									</div>
+								</div>
+							</div>
+
+							<div class="border-bottom mb-10 bg-gray-400 w-100"></div>
+
+							<div class="col-xl-10 offset-xl-1">
+
+								<div class="row">
+									<div class="form-group row col-lg-6">
+										<label class="col-4 col-form-label">Grand Total</label>
+										<div class="col-8">
+											<input class="form-control form-control-solid" type="text"
+												id="grand_total" readonly />
+										</div>
+									</div>
+
+									<div class="form-group row col-lg-6">
+										<label class="col-4 col-form-label">Paid Amount</label>
+										<div class="col-8">
+											<input class="form-control form-control-solid" type="text"
+												id="paid_amount" />
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="form-group row col-lg-6">
+										<label class="col-4 col-form-label">Balance Amount</label>
+										<div class="col-8">
+											<input class="form-control form-control-solid" type="text"
+												id="balance_amount" readonly />
+										</div>
+									</div>
+
+									<div class="form-group row col-lg-6">
+										<label class="col-form-label col-md-4" >Payment Mode</label>
+										<div class="col-md-8">
+											<select class="form-control form-control-solid" name="paymentMode" id="paymentMode">
+												<option value="" disabled selected hidden>Select
+													Payment Type</option>
+												<option value="cash">Cash</option>
+												<option value="upi">UPI</option>
+												<option value="nb">Net Banking</option>
+												<option value="cheque">Cheque</option>
+											</select>
+										</div>
+									</div>
+								</div>
+									
+								<div class="border-bottom mb-5 bg-gray-400 w-100"></div>
+
+								<div class="row">
+								    
+								    <div class="form-group row col-lg-6" id="upi_div">
+										<label class="col-4 col-form-label">Upi Id</label>
+										<div class="col-8">
+											<input class="form-control form-control-solid" type="text" name="upi_id" id="upi_id"
+											placeholder="Enter UPI trans Id" />
+										</div>
+										</div>
+								    <div class="form-group row col-lg-6" id="nb_div">
+										<label class="col-4 col-form-label">Transaction Id</label>
+										<div class="col-8">
+											<input class="form-control form-control-solid" type="text" name="nb_id" id="nb_id"
+											placeholder="Enter Transaction id Id" />
+										</div>
+										</div>
+									<div class="form-group row col-lg-6" id="cheque_div">
+										<label class="col-4 col-form-label">Cheque NO</label>
+										<div class="col-8">
+											<input class="form-control form-control-solid" type="text" name="cheque_id" id="cheque_id"
+											placeholder="Enter Cheque Number" />
+										</div>
+										</div>	
+                           
+									<div class="form-group row col-lg-6" id="bank">
+										<label class="col-4 col-form-label">Bank</label>
+										<div class="col-8">
+											<input class="form-control form-control-solid" type="text" name="bank"
+												id="bank" readonly/>
+										</div>
+										</div>
+										</div>
+									</div>
+								</div>
+								</div>
+
+						</div>
+						<!--end::Container-->
+					</div>
+					<!--end::Entry-->
+				</div>
+				<!--end::Content-->
+				<!--begin::Footer-->
+				<jsp:include page="../common/footer.jsp"></jsp:include>
+				<!--end::Footer-->
+			</div>
+			<!--end::Wrapper-->
+		</div>
+		<!--end::Page-->
+	</div>
+	<!--end::Main-->
+
+
+	<jsp:include page="../common/jsfiles.jsp"></jsp:include>
+	
+	<script type="text/javascript"
+		src="<%=VO_Face.getContainerDeployPath()%>/ResourceBundles/Resources/assets/js/pages/features/custom/spinners.js"></script>
+		<script type="text/javascript"
+		src="<%=VO_Face.getContainerDeployPath()%>/ResourceBundles/Resources/assets/js/pages/widgets.js"></script>
+	<script type="text/javascript"
+		src="<%=VO_Face.getContainerDeployPath()%>/ResourceBundles/Resources/assets/js/pages/custom/wizard/wizard-2.js"></script>
+	<script type="text/javascript"
+		src="<%=VO_Face.getContainerDeployPath()%>/ResourceBundles/Resources/assets/js/pages/crud/forms/widgets/form-repeater.js?v=7.2.7"></script>
+	<script src="<%=VO_Face.getContainerDeployPath()%>/ResourceBundles/Resources/assets/js/pages/crud/forms/widgets/select2.js?v=7.2.8"></script>
+	
+	<script type="text/javascript">
+	
+	var basePath='<%=basePath%>';    
+	var base='<%=base%>';
+	
+	
+	$.ajax({
+		url : base + "/bakeshackAPI/api/getOrderCode",
+		type : "post",
+		dataType : "text",
+		async : false,
+		success:function(data)
+        {
+			$('#order_code').val(data);   
+        }
+	});	
+	
+
+	
+	
+	
+	
+	 $('#upi_div').hide();
+	 $('#nb_div').hide();
+	 $('#cheque_div').hide();
+	 $('#bank').hide();
+	 
+	 
+	 $('#paymentMode').change(function(){
+			var payment_mode = $(this).val();
+			
+			//$('#amount_div').show();
+			
+			if(payment_mode == 'upi'){
+				$('#upi_div').show();
+				$('#nb_div').hide();
+				$('#cheque_div').hide();
+			}else if(payment_mode == 'nb'){
+				$('#upi_div').hide();
+				$('#nb_div').show();
+			    $('#cheque_div').hide();
+			}else if(payment_mode == 'cheque'){
+				$('#upi_div').hide();
+				$('#nb_div').hide();
+				$('#cheque_div').show();
+				$('#bank').show();
+			}else{
+				$('#upi_div').hide();
+				$('#nb_div').hide();
+				$('#cheque_div').hide();
+			}
+			
+		});
+
+	
+	$("#add_Customer").show();
+
+	$('#add_Customer').click(
+			function() {
+
+				var customer_name = $('#customer_name').val();
+				var mobile_no = $('#mobile_no').val();
+				var flag = 1; // Addition
+				
+				
+				console.log(customer_name);
+				if(customer_id != '' || customer_id != null ){
+
+					$.ajax({
+								url : base
+										+ "/bakeshackAPI/api/insertUpdateCustomer",
+								type : "post",
+								dataType : "json",
+								async : false,
+								data : {
+									"customer_name" : customer_name,
+									"mobile_no" : mobile_no,
+									"flag" : flag
+								},
+								error : function(xhr) {
+									var msg = "(insertUpdateCustomer)Sorry but there was an error : "
+											+ xhr.status
+											+ " "
+											+ xhr.statusText;
+									alert(msg);
+								},
+								success : function(response) {
+									if (response != null) {
+
+										if (response >= 1) {
+
+											var msg = "Customer Data inserted Successfully.";
+											alert(msg);
+											
+
+										}													
+									}
+								}
+
+							});
+					
+					$.ajax({
+						url : base + "/bakeshackAPI/api/getCustomerDetails",
+						type : "post",
+						dataType : "json",
+						async : false,
+						data : {
+							"flag" : 1
+						},
+						success : function(data) {
+						 
+							$('#cust_name').val(row.customer_name);
+						}
+					});
+
+					
+				}
+
+
+			})
+			
+
+
+"use strict";
+	
+	 var cName = [];
+		
+		$.ajax({
+			url : base + "/bakeshackAPI/api/getCustomerDetails",
+			type : "post",
+			dataType : "json",
+			async : false,
+			data : {
+				"flag" : 1
+			},
+			success : function(data) {
+				if (data != null) {
+					data.forEach(function(e) {
+						cName.push(e.customer_name);
+						//cName.push(e.customer_name + " - " + e.mobile_no);
+					})
+				}
+			}
+		});
+     
+         $('#customer_name').change(function(){
+			
+			var mobile_no = $('#mobile_no').val();
+			//var customer_id = $("#customer_id").val();
+			console.log(mobile_no);
+			//console.log(customer_id);
+			
+			var customer_name = $(this).val();
+				
+			$.ajax({
+				url : base + "/bakeshackAPI/api/getCustomerDetails",
+				type : "post",
+				dataType : "json",
+				async : false,
+				data : {"flag":1,},
+				success:function(data)
+		        {
+					
+					const row = data.find(d => d.customer_name == customer_name);
+					
+					console.log(row);
+					
+					if(row != null){
+						$('#mobile_no').val(row.mobile_no);
+						
+					}else{
+						$('#mobile_no').val("");
+					}
+
+		        }
+			});	
+		})
+		
+		$.urlParam = function(name){
+ 			var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+ 			return results != null ? results[1] || 0 : 0;
+ 		}
+ 				     
+ 		var query = $.urlParam('mobile_no');
+
+ 		console.log("data " + query);
+
+ 		if(query != '' && query != null){	
+ 			
+ 					
+ 			$.ajax({
+ 				url : base + "/bakeshackAPI/api/getCustomerDetails",
+ 				type : "post",
+ 				dataType : "json",
+ 				async : false,
+ 				data : {"flag":1,},
+ 				success:function(data)
+ 		        {
+ 					
+ 					const row = data.find(d => d.customer_name == query ||  d.mobile_no == query);
+ 					
+ 					console.log(row);
+ 					
+ 					if(row != null){
+ 						//$('customer_id').val(row.customer_id);
+ 						$('#mobile_no').val(row.mobile_no);
+ 						$('#customer_name').val(row.customer_name);
+ 						
+ 					}else{
+ 						$('#mobile_code').val("");
+ 						//$('#customer_id').val("");
+ 					}
+
+ 		        }
+ 			});	
+ 		}	
+
+ 		var demo5 = function() {
+			
+            var bloodhound = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.whitespace,
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            // `states` is an array of state names defined in "The Basics"
+            local: cName
+        });
+
+        $('#customer_name').typeahead({
+            hint: true,
+            highlight: true,
+            minLength: 1
+        }, {
+            name: 'cName',
+            source: bloodhound
+        });
+        
+       /*
+       $('#customer_name').typeahead(null, {
+            name: 'cName',
+            display: 'value',
+            source: bloodhound,
+            templates: {
+                empty: [
+                    '<div class=\"empty-message\" style=\"padding: 10px 15px; text-align: center;\">',
+                    'unable to find any Best Picture winners that match the current query',
+                    '</div>'
+                ].join('\n'),
+                suggestion: Handlebars.compile('<div><strong>{{value}}</strong> – {{mobile_no}}</div>')
+            }
+        });
+       */ 
+        
+  
+        
+        
+        }
+    
+ 		
+	$("#addproduct").show();
+	
+   $.ajax({
+		url : base + "/bakeshackAPI/api/getProductDetails",
+		type : "post",
+		dataType : "json",
+		async : false,
+		data : {"flag":1},
+		success:function(data)
+	    {
+			data.forEach((element)=> {
+				
+			        $('#productName').append($(document.createElement('option')).prop({
+		                value: element.product_name,
+		                text: element.product_name
+		            }))
+				
+			});   
+	    }
+	});	
+
+	
+	$('#productName').change(function(){
+		
+		var product_name = $('#productName').val();
+		
+		
+		$.ajax({
+			url : base + "/bakeshackAPI/api/getProductDetails",
+			type : "post",
+			dataType : "json",
+			async : false,
+			data : {"flag":1},
+			success:function(data)
+	        {
+				if(data != null){
+					const row = data.find(d => d.product_name == product_name);
+					
+					console.log(row);
+					
+					if(row != null){
+						
+						$('#rate').val(row.selling_price);
+						
+					}
+				}  
+	        }
+		});
+	});
+	
+	
+	var jsonString;
+	var sub_total = 0;
+
+	
+	$('#addProduct').click(function() {
+				
+				$('#kt_repeater_1').repeater();
+				//get the values of the inputs as a formatted object
+				var val = $('#kt_repeater_1').repeaterVal();
+
+				var pList = [];
+				
+				val["productList"].forEach(function(item){
+					
+					var total = item.rate * item.quantity;
+				    sub_total = sub_total + total;
+				    console.log("sub_total : " + sub_total);
+				    
+				    
+					pList.push({
+						product_name : item.productName,
+						rate : item.rate,
+						qty : item.quantity,
+						total : total
+						
+					})
+					
+				});
+				
+				 
+				
+				
+				
+				$('#sub_total').val(sub_total);
+				
+				
+				$('#discount').change(function(){
+					var discount = $(this).val();
+					var total = sub_total - ((sub_total * discount)/100);
+					$('#total').val(total);
+				})
+				
+				
+				jsonString = JSON.stringify(pList);
+				
+				console.log("json String");
+				
+				console.log(jsonString);
+				
+				
+				var KTDatatableRemoteAjaxDemo = function() {
+					// Private functions
+					
+					console.log("jsonString : " + jsonString);
+					
+					 var dataJSONArray = JSON.parse(jsonString);
+					
+					console.log("dataJSONArray : " + dataJSONArray);
+
+					// basic demo
+					var demo = function() {
+						var datatable = $('#kt_datatable')
+								.KTDatatable(
+										{
+											// datasource definition
+											data: {
+		        								type: 'local',
+		        								source: dataJSONArray,
+		        								pageSize: 10,
+		      									},
+
+												pageSize : 10,
+												serverPaging : true,
+												serverFiltering : true,
+												serverSorting : true,
+										
+
+											// layout definition
+											layout : {
+												scroll : false,
+												footer : false,
+											},
+
+											// column sorting
+											sortable : true,
+
+											pagination : true,
+
+											search : {
+												input : $('#kt_datatable_search_query'),
+												key : 'generalSearch'
+											},
+
+											// columns definition
+											columns : [ {
+												field : 'product_name',
+												title : 'Product',
+											}, {
+												field : 'qty',
+												title : 'Quantity',
+											}, {
+												field : 'rate',
+												title : 'Rate',
+											}, {
+												field : 'total',
+												title : 'Total',
+											}
+
+											],
+
+										});
+
+					};
+										
+
+					return {
+						// public functions
+						init : function() {
+							demo();
+							demo5();
+						},
+					};
+				}();
+
+				jQuery(document).ready(function() {
+					KTDatatableRemoteAjaxDemo.init();
+				});
+									
+		})
+
+		
+		
+	$('#addProduct')
+	.click(
+			function() {
+
+				var product_name = $('#product_name').val();
+				var product_code = $('#product_code').val();
+				var subcategory = $('#subcategory').val();
+				var product_desc = $('#product_desc').val();
+				var selling_price = $('#selling_price').val();
+				var unit = $('#unit').val();
+				var flag = 1; // Addition
+
+				if (product_name  != "" && product_code != "") {
+					$
+							.ajax({
+								url : base
+										+ "/bakeshackAPI/api/insertUpdateProduct",
+								type : "post",
+								dataType : "json",
+								async : false,
+								data : {
+									"product_name" : product_name,
+									"product_code" : product_code,
+									"subcategory"  : subcategory,
+									"product_desc" : product_desc,
+									"selling_price" : selling_price,
+									"unit" : unit,
+									"flag" :flag
+								},
+								error : function(xhr) {
+									var msg = "(insertUpdateProduct)Sorry but there was an error : "
+											+ xhr.status
+											+ " "
+											+ xhr.statusText;
+									alert(msg);
+								},
+								success : function(response) {
+									if (response != null) {
+
+										if (response >= 1) {
+
+											var msg = "Product Data inserted Successfully.";
+											alert(msg);
+
+										} 
+									}
+								}
+
+							});
+				}
+
+			})
+
+"use strict";
+		
+	</script>
+
+</body>
+</html>
+
+<%
+	} catch (Exception e) {
+		Logger.log(dbConnVar, "" + e);
+	}
+%>
+

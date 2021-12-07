@@ -1,0 +1,565 @@
+
+<%@page import="com.config.FaceConfig"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java"
+	import="java.util.*,com.config.ConnectionFactory,com.config.I18nUtility,com.customLog.Logger,com.faces.VO_Face"%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+	String base = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+	String dbConnVar = "BAFNA";
+	try {
+%>
+
+
+<jsp:include page="../common/header.jsp"></jsp:include>
+
+
+<body onafterprint="printP()" id="kt_body"
+	class="print-content-only quick-panel-right demo-panel-right offcanvas-right header-fixed header-mobile-fixed subheader-enabled aside-enabled aside-static page-loading">
+
+<!--begin::Container-->
+					<div class="d-flex flex-row flex-column-fluid container">
+						<!--begin::Content Wrapper-->
+						<div class="main d-flex flex-column flex-row-fluid">
+							<div class="content flex-column-fluid" id="kt_content">
+								<div class="card card-custom">
+									<div class="card-body p-0">
+										<!--begin::Invoice-->
+										<div class="row justify-content-center pt-4 px-4 pt-md-20 px-md-0">
+											<div class="col-md-12">
+												<!-- begin: Invoice header-->
+												<div class="row py-4 px-4 px-md-0" id="header">
+													<div class="col-md-10 offset-1">
+													<div class="row " style="color:#132072">
+												<img id="logo" alt="Logo"
+													src="<%=VO_Face.getContainerDeployPath()%>/ResourceBundles/Resources/assets/gif/src.png"
+													class="logo-default max-h-120px" />
+												<div class="col-md-7 text-center">
+
+													<h1 class="font-weight-bolder text-right" style="font-size: 35px;">SHREE
+														RAJENDRA CLINIC</h1>
+
+													<div class="text-right ">
+
+														<h2>Dr. Rakesh F. Bafna</h2>
+														<p>B.H.M.S(Reg No. 27450)</p>
+
+													</div>
+													<h5>पोयनाड : भाजी मार्केट गल्ली</h5>
+													<h5 class="ml-2 font-weight-bolder">7775999536 |
+														9822786831(Whatsapp)</h5>
+												</div>
+											</div>
+
+											<div class="border-bottom bg-info w-100"></div>
+											<div class="border-bottom bg-info w-100"></div>
+											<div class="border-bottom bg-info w-100"></div>
+
+										</div>
+									</div>
+									
+									    
+												<div id="name" class="col-md-10 offset-1">
+											<span
+											class="d-flex justify-content-between align-items-baseline">
+
+											<div class="d-flex justify-content-start">
+												<h4
+													class="pl-0 pr-4 font-weight-bold text-muted text-uppercase">Name:
+												</h4>
+												<h4 class="font-weight-bold" id="patient_name"></h4>
+											</div>
+
+											<div class="d-flex justify-content-start">
+												<h4
+													class="pl-0 pr-4 font-weight-bold text-muted text-uppercase">Date:
+												</h4>
+												<h4 class="font-weight-bold" id="date">5/3/2021</h4>
+											</div>
+										</span>
+												
+											</div>
+											
+											
+										
+
+										<div class="d-flex justify-content-start ">
+										<div class="d-flex justify-content-start col-md-7 offset-1">
+											<h5
+												class="pl-0 pr-4 font-weight-bold text-muted text-uppercase">Patient
+												Code:</h5>
+											<h5 class="font-weight-bold" id="patient_code"></h5>
+										</div>
+										
+
+									</div>
+									
+									<div class="col-md-10 offset-1">
+
+											<div class="row px-8 mt-4 px-md-0" id="complaint">
+												<div class="table-responsive">
+													<table class="table">
+														<thead>
+															<tr>
+																<th
+																	class="font-weight-bold h5 text-muted text-uppercase pl-5"
+																	id="complaints_name">Complaints</th>
+																<th
+																	class="font-weight-bold h5 text-muted text-uppercase"
+																	id="diagnosis_name">Diagnosis</th>
+															</tr>
+														</thead>
+														<tbody id="cTbl" style="font-size: 12px;">
+
+														</tbody>
+													</table>
+												</div>
+											</div>
+											</div>
+
+												<!--end: Invoice header-->
+												<!--begin: Invoice body-->
+												<div class="row border-bottom pb-10 px-md-1 offset-1">
+													<div class="col-md-8 pr-md-10">
+														<div class="table-responsive">
+															<table class="table ">
+																<thead>
+																	<tr>
+						                                            	<th class="pt-1 pb-9 pl-0 font-weight-bolder text-muted font-size-lg text-uppercase" style="font-size: 15px;">type</th>
+																		<th class="pt-1 pb-9 pl-0 font-weight-bolder text-muted font-size-lg text-uppercase" style="font-size: 15px;">Med. Name</th>
+																		<th class="pt-1 pb-9  font-weight-bolder text-muted font-size-lg text-uppercase" style="font-size: 15px;">Dose</th>
+																		<th class="pt-1 pb-9  font-weight-bolder text-muted font-size-lg text-uppercase" style="font-size: 15px;">Times</th>
+																		<th class="pt-1 pb-9  pr-0 font-weight-bolder text-muted font-size-lg text-uppercase"style="font-size: 15px;">Qty</th>
+																	</tr>
+																</thead>
+																<tbody id="mTbl" style="font-size: 15px;">
+
+														</tbody>
+															</table>
+														</div>
+														<!-- <div class="border-bottom w-100 mt-10 mb-13"></div> -->
+														
+													</div>
+													<div class="col-md-3 border-left-md text-right">
+														
+												
+
+											<div id="heightWeight">
+												<div
+													class="d-flex h5 align-items-baseline justify-content-between">
+													<p class="w-50 font-weight-bold" id="age_name"></p>
+													<p class="font-weight-bolder" id="age"></p>
+												</div>
+												<div
+													class="d-flex h5 align-items-baseline justify-content-between">
+													<p class="w-50 font-weight-bold" id="gender_name"></p>
+													<p class="font-weight-bolder" id="gender"></p>
+												</div>
+												<div
+													class="d-flex h5 align-items-baseline justify-content-between">
+													<p class="w-50 font-weight-bold" id="weight_name"></p>
+													<p class="font-weight-bolder" id="weight"></p>
+												</div>
+												<div
+													class="d-flex h5 align-items-baseline justify-content-between">
+													<p class="w-50 font-weight-bold" id="temp_name"></p>
+													<p class="font-weight-bolder" id="temp"></p>
+												</div>
+											</div>
+
+											<div id="vital">
+												<!-- <div
+													class="d-flex h5 align-items-baseline justify-content-between">
+													<p class="text-muted" id="blood_sugar_text"></p>
+													<p class="font-weight-bolder"></p>
+												</div> -->
+												<div
+													class="d-flex h5 align-items-baseline justify-content-between">
+													<p class="w-50 font-weight-bold" id="blood_sugar_name"></p>
+													<p class="font-weight-bolder" id="blood_sugar"></p>
+												</div>
+												<div
+													class="d-flex h5 align-items-baseline justify-content-between">
+													<p class="w-50 font-weight-bold" id="blood_pressure_name"></p>
+													<p class="font-weight-bolder" id="blood_pressure"></p>
+												</div>
+												<div
+													class="d-flex h5 align-items-baseline justify-content-between">
+													<p class="w-50 font-weight-bold" id="pulse_name"></p>
+													<p class="font-weight-bolder" id="pulse"></p>
+												</div>
+												<div
+													class="d-flex h5 align-items-baseline justify-content-between">
+													<p class="w-50 font-weight-bold" id="hb_name"></p>
+													<p class="font-weight-bolder" id="hb"></p>
+												</div>
+											</div>
+
+
+
+											<div class="d-flex h5 align-items-baseline justify-content-between">
+												<h6 class="w-50 font-weight-bolder" id="kco_name"></h6>
+												<p class="font-weight-bold" id="kco_value"></p>
+											</div>
+											<div class="d-flex h5 align-items-baseline justify-content-between">
+												<h6 class="w-50 font-weight-bolder" id="allergy_name"></h6>
+												<p class="font-weight-bold" id="allergy_value"></p>
+											</div>
+
+													</div>
+													
+											<div class="advice h4 ml-30 mt-3 col-md-8" id="kco">
+										<h6 class="font-weight-bolder" style="font-size: 15px;"id="advice_name"></h6>
+										<p class="font-weight-bold" style="font-size: 15px;" id="advice"></p>
+									</div> 
+									<div class="col-md-3 ml-25 text-center">
+											<h5>फेर तपासणी <span class="mr-15"> </span>दिवसांनी</h5>
+										</div>
+									
+									
+											</div>	
+												<!--end: Invoice body-->
+												
+												<div class="row footer1">
+										<div class="col-md-12  text-center mt-8">
+											<div class="row justify-content-center">
+												<h4 class="font-weight-bolder">वेळ :</h4>
+												<h4>
+													<span id="time">सकाळी ९ ते १.३०</span> <span>सायं. ४ ते ८
+														वाजता.</span>
+												</h4>
+											</div>
+											<h4 id="notice">दवाखाना रविवारी सुद्धा चालू राहील</h4>
+										</div>
+
+										
+
+									</div>
+											</div>
+											
+										</div>
+										</div>
+										
+									</div>
+								</div>
+							</div>
+							<!--end::Content-->
+						</div>
+						<!--begin::Content Wrapper-->
+					
+					<!--end::Container-->
+					<jsp:include page="../common/jsfiles.jsp"></jsp:include>
+
+
+	<script type="text/javascript">
+	
+	var basePath='<%=basePath%>';    
+	var base='<%=base%>';
+   
+	window.print();
+	var today = new Date();
+	var dd = String(today.getDate()).padStart(2, '0');
+	var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+	var yyyy = today.getFullYear();
+
+	today = mm + '/' + dd + '/' + yyyy;
+	document.write(today);
+	alert(today);
+	
+	
+	$.ajax({
+			url : base + "/dssAPI/dfapi/getNoticeDetails",
+			type : "post",
+			dataType : "json",
+			async : false,
+			data : {
+				"flag" : 1
+			},
+			success : function(data) {
+
+				console.log(data);	
+				var row = data[0];
+				$('#notice').text(row.notice_desc);
+				//alert(row.notice_desc);
+				alert(row.till_date);
+				
+			}
+});
+	
+    
+		$.urlParam = function(name) {
+			var results = new RegExp('[\?&]' + name + '=([^&#]*)')
+					.exec(window.location.href);
+			return results[1] || 0;
+		}
+
+		var patient_code = $.urlParam('code');
+
+		var print = $.urlParam('print');
+		var p = print.split("$");
+
+		if (p[0] != "true") {
+			$('#logo').hide();
+		}
+
+		if (p[1] != "true") {
+			$('#header').hide();
+		}
+
+		if (p[2] != "true") {
+			$('#vital').hide();
+		}
+
+		if (p[3] != "true") {
+			$('#heightWeight').hide();
+		}
+
+		if (p[4] != "true") {
+			$('#complaint').hide();
+		}
+
+		if (p[5] != "true") {
+			$('#kco').hide();
+		}
+
+		if (p[6] != "true") {
+			$('#allergy').hide();
+		}
+
+		if (p[7] != "true") {
+			$('#notice').hide();
+		}
+		
+		
+		var timeNotice = $.urlParam('timeNotice');
+		var tn = timeNotice.split("$");
+
+		$('#complaint').hide();
+
+		var visit_id;
+
+		$
+				.ajax({
+					url : base + "/dssAPI/dfapi/getWizardFormData",
+					type : "post",
+					dataType : "json",
+					async : false,
+					data : {
+						"patient_code" : patient_code,
+						"flag" : 1
+					},
+					success : function(data) {
+
+						console.log(data);
+
+						var row = data[0];
+						if (row != null) {
+							$('#patient_name').text(row.patient_name);
+							$('#patient_code').text(row.patient_code);
+
+							let date = new Date(row.date);
+							$('#date').text(
+									date.getDate() + "-"
+											+ (date.getMonth() + 1) + "-"
+											+ date.getFullYear());
+							
+
+							 const parsedData = JSON.parse(row.prescription_desc);
+						                
+						                alert(row.prescription_desc);
+						                
+        
+							parsedData.forEach(function(m, i) {
+								
+								if(m.isPrintable == 'Y')
+                                {
+								if(m.is_special == 'Y')
+			 	        		{
+
+									
+												$('#mTbl')
+														.append(
+																'<tr class="font-weight-boldest h6 text-success" style="font-size: 15px;"><td class="pt-7 px-5"><div>'
+																		+ m.type
+																		+ '</div></td><td class="pt-7">'
+																		+ m.medicineName
+																		+ '</div></td><td class=" pt-7">'
+																		+ m.dose
+																		+ '</td><td class="pt-7">'
+																		+ m.time
+																		+ '</td><td class=" pt-7">'
+																		+ m.qty
+																		+ '</td></tr><tr class="text-success" style="font-size: 15px;"><th scope="row"></th><td colspan="4">'
+																		+ m.remark
+																		+ '</td></tr>');
+			 	        		}
+								else{
+									
+									$('#mTbl')
+									.append(
+											'<tr class="font-weight-boldest h5 text-info" style="font-size: 15px;"><td class=" pt-7 px-5"><div>'
+													+ m.type
+													+ '</div></td><td class="pt-7">'
+													+ m.medicineName
+													+ '</div></td><td class="pt-7">'
+													+ m.dose
+													+ '</td><td class="pt-7">'
+													+ m.time
+													+ '</td><td class="pt-7">'
+													+ m.qty
+													+ '</td></tr><tr><th scope="row"></th><td colspan="4">'
+													+ m.remark
+													+ '</td></tr>');
+								}
+                                }
+								else{
+									
+									
+								}
+
+												
+									}); 
+
+							if (row.complaints_desc != ''
+									|| row.other_complaints != ''
+									|| row.diagnosis_desc != '') {
+
+								$('#complaint').show();
+
+								complaints_desc = row.complaints_desc.replace(
+										'*', '');
+
+								$('#cTbl')
+										.append(
+												'<tr class="font-weight-bolder h5" style="font-size: 15px;"><td class="pt-7 px-5">'
+														+ complaints_desc
+																.replace('*',
+																		',')
+														+ '</td><td class="pt-7">'
+														+ row.diagnosis_desc
+														+ '</td></tr><tr class="font-weight-bolder h5" style="font-size: 15px;"><td class="pt-7 px-5">'
+														+ row.other_complaints
+														+ '</td><td class="pt-7"></td></tr>');
+							}
+
+							if (row.age != '') {
+								$('#age_name').text('Age :');
+								$('#age').text(row.age);
+							}
+
+							if (row.gender != '' && row.gender != 'null') {
+								$('#gender_name').text('Gender :');
+								$('#gender').text(
+										row.gender.charAt(0).toUpperCase()
+												+ row.gender.slice(1));
+							}
+
+							if (row.weight != '') {
+								$('#weight_name').text('Weight :');
+								$('#weight').text(row.weight);
+							}
+
+							if (row.temperature != '') {
+								$('#temp_name').text('Temp :');
+								$('#temp').text(row.temperature);
+							}
+
+							if (row.special_advise != "") {
+								$('#advice_name').text('Advice :');
+								var advice = row.special_advise.replaceAll('*',
+										'*');
+								$('#advice').text(advice);
+							}
+							if (row.kco != "") {
+								$('#kco_name').text('K/C/O :');
+								$('#kco_value').text(row.kco);
+							}
+
+							if (row.allergy != "") {
+								$('#allergy_name').text('Allergy :');
+								$('#allergy_value').text(row.allergy);
+							}
+
+							if (row.notice != "") {
+								$('#notice_name').text('Notice :');
+								$('#notice_value').text(row.notice);
+							}
+
+							const sugar = JSON.parse(row.sugar);
+
+							if (sugar.f != "" || sugar.p != "" || sugar.r != "") {
+
+								$('#blood_sugar_text').text("Sugar");
+
+								if (sugar.f != "") {
+									$('#blood_sugar_name').text("Fasting");
+									$('#blood_sugar').text(sugar.f);
+								}
+
+								if (sugar.p != "") {
+									$('#blood_sugar_name').text("Post Meal");
+									$('#blood_sugar').text(sugar.p);
+								}
+
+								if (sugar.r != "") {
+									$('#blood_sugar_name').text("Random");
+									$('#blood_sugar').text(sugar.r);
+								}
+							}
+
+							const blood_pressure = JSON
+									.parse(row.blood_pressure);
+
+							if (blood_pressure.s != ''
+									|| blood_pressure.d != '') {
+								$('#blood_pressure_name').text('BP :');
+								$('#blood_pressure').text(
+										blood_pressure.s + '/'
+												+ blood_pressure.d);
+							}
+
+							if (row.hb != '') {
+								$('#hb_name').text('HB :');
+								$('#hb').text(row.hb);
+							}
+
+							if (row.pulse != '') {
+								$('#pulse_name').text('Pulse :');
+								$('#pulse').text(row.pulse);
+							}
+
+							visit_id = row.visit_id;
+						}
+
+					}
+				});
+
+				
+				
+		function printP() {
+			var url = "fees-collection.jsp" + '?pcode=' + patient_code
+					+ '&vid=' + visit_id;
+  
+			window.location.assign(url);
+		}
+
+		
+		
+
+	</script>
+
+	<script type="text/JavaScript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jQuery.print/1.6.0/jQuery.print.js"></script>
+
+
+
+</body>
+</html>
+
+<%
+	} catch (Exception e) {
+		Logger.log(dbConnVar, "" + e);
+	}
+%>

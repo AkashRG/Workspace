@@ -1,0 +1,157 @@
+<%@page import="com.config.FaceConfig"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" import="java.util.*,com.config.ConnectionFactory,com.config.I18nUtility,com.customLog.Logger,com.faces.VO_Face" %>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+
+String dbConnVar="BAFNA";
+try
+	{
+	
+%>	
+	<jsp:include page="/form/common/header.jsp"></jsp:include>
+	
+
+
+<jsp:include page="/form/common/sidebar.jsp"></jsp:include>
+
+<div class="wrapper">
+	<!-- navbar -->
+	<jsp:include page="/form/common/navbar.jsp"></jsp:include>
+	<!-- navbar end -->
+
+	<div class="container">
+
+		<!-- Section a -->
+		<section class="section-a row">
+			<div class="col-md-8 tab">
+
+				<ul class="nav nav-pills">
+					<li><a data-bs-toggle="pill" class="card">
+							<p>10</p> <i class="fas fa-users fa-2x"></i>
+							<p>Patient Count</p>
+					</a></li>
+					<li><a data-bs-toggle="pill" class="card active">
+							<p>10</p> <i class="fas fa-users fa-2x"></i>
+							<p>Regular Patient</p>
+					</a></li>
+					<li><a data-bs-toggle="pill" class="card">
+							<p>10</p> <i class="fas fa-users fa-2x"></i>
+							<p>New Registraions</p>
+					</a></li>
+					<li><a data-bs-toggle="pill" class="card">
+							<p>10</p> <i class="fas fa-users fa-2x"></i>
+							<p>MR Visitor Count</p>
+					</a></li>
+					<li><a data-bs-toggle="pill" class="card">
+							<p>10,000 RS</p> <i class="fas fa-shield-alt fa-2x"></i>
+							<p>Today's Collection</p>
+					</a></li>
+					<li><a data-bs-toggle="pill" class="card">
+							<p>10</p> <i class="fas fa-users fa-2x"></i>
+							<p>Visit Count</p>
+					</a></li>
+				</ul>
+
+			</div>
+
+			<div class="col-md-4">
+				<div class="card">
+					<h5 class="text-yellow fw-bold">Quick Access</h5>
+					<p>Patient's History</p>
+					<a href="new.jsp" class="text-yellow mt-3">Check Report <i
+						class="fas fa-arrow-right text-yellow"></i></a>
+					<div class="image">
+						<img
+							src="https://preview.keenthemes.com/metronic/theme/html/demo5/dist/assets/media/svg/humans/custom-13.svg">
+
+					</div>
+				</div>
+			</div>
+
+		</section>
+		<!-- Section a end -->
+
+
+		<!-- Section-b  -->
+		<section class="section-b row">
+			<div class="col-md-8 left-section">
+				<div class="order">
+					<div class="head">
+						<div class="text lh-sm">
+							<h6>Patients Visited</h6>
+						</div>
+						<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+							<li class="nav-item" role="presentation"><a
+								class="nav-link active" data-bs-toggle="pill"
+								href="#pills-month" role="tab" aria-selected="true">Month</a></li>
+							<li class="nav-item" role="presentation"><a class="nav-link"
+								data-bs-toggle="pill" href="#pills-week" role="tab"
+								aria-selected="false">Week</a></li>
+							<li class="nav-item" role="presentation"><a class="nav-link"
+								data-bs-toggle="pill" href="#pills-day" role="tab"
+								aria-selected="false">Day</a></li>
+						</ul>
+					</div>
+
+
+				</div>
+			</div>
+
+			<div class="col-md-4 right-section">
+				<div class="people">
+					<div class="content-hort">
+						<h6 class="text-sky-blue">Patients Visited Today</h6>
+						<div class="dropdown">
+							<div type="button" id="dropdownMenuButton"
+								data-bs-toggle="dropdown" aria-expanded="false">
+								<i class="fas fa-ellipsis-v icon-box-sky-blue text-sky-blue"></i>
+							</div>
+							<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+								<li><a class="dropdown-item" href="#">Action</a></li>
+								<li><a class="dropdown-item" href="#">Another action</a></li>
+								<li><a class="dropdown-item" href="#">Something else
+										here</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="users">
+						<div class="user d-flex my-3">
+							<div class="small-box"></div>
+							<div class="text px-4">
+								<h6 class="text-dark">Ricky Hunt</h6>
+								<p>Business Analyst</p>
+							</div>
+						</div>
+						<div class="user d-flex my-3">
+							<div class="small-box"></div>
+							<div class="text px-4">
+								<h6 class="text-dark">Anne Clarc</h6>
+								<p>Creative Director</p>
+							</div>
+						</div>
+						<div class="user d-flex my-3">
+							<div class="small-box"></div>
+							<div class="text px-4">
+								<h6 class="text-dark">Ricky Hunt</h6>
+								<p>Business Analyst</p>
+							</div>
+						</div>
+						<div class="user d-flex my-3">
+							<div class="small-box"></div>
+							<div class="text px-4">
+								<h6 class="text-dark">Anne Clarc</h6>
+								<p>Creative Director</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- Section-b end -->
+	</div>
+</div>
+</div>
+
+<jsp:include page="/form/common/jsfiles.jsp"></jsp:include>

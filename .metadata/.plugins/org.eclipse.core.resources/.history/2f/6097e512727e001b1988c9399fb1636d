@@ -1,0 +1,22 @@
+<jsp:include page="common/header.jsp"></jsp:include>
+
+<div class="wrapper">
+	<jsp:include page="common/sidebar.jsp"></jsp:include>
+
+	<div id="main">
+		<!-- navbar -->
+		<jsp:include page="common/navbar.jsp"></jsp:include>
+		<!-- navbar end -->
+
+		<div class="container">
+
+			<h1>Welcome</h1>
+
+		</div>
+	</div>
+</div>
+
+
+<jsp:include page="/form/common/footer.jsp"></jsp:include>
+</body>
+</html>

@@ -1,0 +1,1576 @@
+<%@page import="com.config.FaceConfig"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java"
+	import="java.util.*,com.config.ConnectionFactory,com.config.I18nUtility,com.customLog.Logger,com.faces.VO_Face"%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+	String base = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+	String dbConnVar = "BAFNA";
+	try {
+%>
+
+
+<jsp:include page="../common/header.jsp"></jsp:include>
+<link rel="stylesheet"
+	href="<%=VO_Face.getContainerDeployPath()%>/ResourceBundles/Resources/assets/css/pages/wizard/wizard-2.css"
+	rel="stylesheet" type="text/css" />
+
+<body id="kt_body"
+	class="quick-panel-right demo-panel-right offcanvas-right header-fixed header-mobile-fixed aside-enabled aside-static page-loading">
+	<jsp:include page="/form/common/mobile-header.jsp"></jsp:include>
+	<div class="d-flex flex-column flex-root">
+		<!--begin::Page-->
+		<div class="d-flex flex-row flex-column-fluid page">
+			<!--begin::Aside-->
+			<jsp:include page="/form/common/sidebar.jsp"></jsp:include>
+			<!--end::Aside-->
+			<!--begin::Wrapper-->
+			<div class="d-flex flex-column flex-row-fluid wrapper"
+				id="kt_wrapper">
+				<!--begin::Header-->
+				<jsp:include page="/form/common/navbar.jsp"></jsp:include>
+				<!--end::Header-->
+				<!--begin::Content-->
+				<div class="content d-flex flex-column flex-column-fluid"
+					id="kt_content">
+					<!--begin::Entry-->
+					<div class="d-flex flex-column-fluid">
+						<!--begin::Container-->
+						<div class="container">
+
+
+
+
+							<div class="card card-custom">
+								<div class="card-body p-0">
+									<!--begin: Wizard-->
+									<div class="wizard wizard-2" id="kt_wizard"
+										data-wizard-state="step-first" data-wizard-clickable="true">
+										<!--begin: Wizard Nav-->
+										<div
+											class="wizard-nav border-right py-8 px-8 py-lg-20 px-lg-10"
+											style="flex: 0">
+											<!--begin::Wizard Step 1 Nav-->
+											<div class="wizard-steps">
+												<div class="wizard-step" data-wizard-type="step"
+													data-wizard-state="current">
+													<div class="wizard-wrapper">
+														<div class="wizard-icon">
+															<span class="svg-icon svg-icon-2x"> <!--begin::Svg Icon | path:assets/media/svg/icons/General/User.svg-->
+																<svg xmlns="http://www.w3.org/2000/svg"
+																	xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+																	height="24px" viewBox="0 0 24 24" version="1.1">
+																		<g stroke="none" stroke-width="1" fill="none"
+																		fill-rule="evenodd">
+																			<polygon points="0 0 24 0 24 24 0 24" />
+																			<path
+																		d="M12,11 C9.790861,11 8,9.209139 8,7 C8,4.790861 9.790861,3 12,3 C14.209139,3 16,4.790861 16,7 C16,9.209139 14.209139,11 12,11 Z"
+																		fill="#000000" fill-rule="nonzero" opacity="0.3" />
+																			<path
+																		d="M3.00065168,20.1992055 C3.38825852,15.4265159 7.26191235,13 11.9833413,13 C16.7712164,13 20.7048837,15.2931929 20.9979143,20.2 C21.0095879,20.3954741 20.9979143,21 20.2466999,21 C16.541124,21 11.0347247,21 3.72750223,21 C3.47671215,21 2.97953825,20.45918 3.00065168,20.1992055 Z"
+																		fill="#000000" fill-rule="nonzero" />
+																		</g>
+																	</svg> <!--end::Svg Icon-->
+															</span>
+														</div>
+														<div class="wizard-label">
+															<h3 class="wizard-title">Patient Details</h3>
+														</div>
+													</div>
+												</div>
+												<div class="wizard-step" data-wizard-type="step">
+													<div class="wizard-wrapper">
+														<div class="wizard-icon">
+															<span class="svg-icon svg-icon-2x"> <!--begin::Svg Icon | path:assets/media/svg/icons/General/Thunder-move.svg-->
+																<svg xmlns="http://www.w3.org/2000/svg"
+																	xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+																	height="24px" viewBox="0 0 24 24" version="1.1">
+																		<g stroke="none" stroke-width="1" fill="none"
+																		fill-rule="evenodd">
+																			<rect x="0" y="0" width="24" height="24" />
+																			<path
+																		d="M16.3740377,19.9389434 L22.2226499,11.1660251 C22.4524142,10.8213786 22.3592838,10.3557266 22.0146373,10.1259623 C21.8914367,10.0438285 21.7466809,10 21.5986122,10 L17,10 L17,4.47708173 C17,4.06286817 16.6642136,3.72708173 16.25,3.72708173 C15.9992351,3.72708173 15.7650616,3.85240758 15.6259623,4.06105658 L9.7773501,12.8339749 C9.54758575,13.1786214 9.64071616,13.6442734 9.98536267,13.8740377 C10.1085633,13.9561715 10.2533191,14 10.4013878,14 L15,14 L15,19.5229183 C15,19.9371318 15.3357864,20.2729183 15.75,20.2729183 C16.0007649,20.2729183 16.2349384,20.1475924 16.3740377,19.9389434 Z"
+																		fill="#000000" />
+																			<path
+																		d="M4.5,5 L9.5,5 C10.3284271,5 11,5.67157288 11,6.5 C11,7.32842712 10.3284271,8 9.5,8 L4.5,8 C3.67157288,8 3,7.32842712 3,6.5 C3,5.67157288 3.67157288,5 4.5,5 Z M4.5,17 L9.5,17 C10.3284271,17 11,17.6715729 11,18.5 C11,19.3284271 10.3284271,20 9.5,20 L4.5,20 C3.67157288,20 3,19.3284271 3,18.5 C3,17.6715729 3.67157288,17 4.5,17 Z M2.5,11 L6.5,11 C7.32842712,11 8,11.6715729 8,12.5 C8,13.3284271 7.32842712,14 6.5,14 L2.5,14 C1.67157288,14 1,13.3284271 1,12.5 C1,11.6715729 1.67157288,11 2.5,11 Z"
+																		fill="#000000" opacity="0.3" />
+																		</g>
+																	</svg> <!--end::Svg Icon-->
+															</span>
+														</div>
+														<div class="wizard-label">
+															<h3 class="wizard-title">Vital Details</h3>
+														</div>
+													</div>
+												</div>
+												<div class="wizard-step" data-wizard-type="step">
+													<div class="wizard-wrapper">
+														<div class="wizard-icon">
+															<span class="svg-icon svg-icon-2x"> <!--begin::Svg Icon | path:assets/media/svg/icons/Map/Position.svg-->
+																<svg xmlns="http://www.w3.org/2000/svg"
+																	xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+																	height="24px" viewBox="0 0 24 24" version="1.1">
+																		<g stroke="none" stroke-width="1" fill="none"
+																		fill-rule="evenodd">
+																			<rect x="0" y="0" width="24" height="24" />
+																			<path
+																		d="M19,11 L21,11 C21.5522847,11 22,11.4477153 22,12 C22,12.5522847 21.5522847,13 21,13 L19,13 C18.4477153,13 18,12.5522847 18,12 C18,11.4477153 18.4477153,11 19,11 Z M3,11 L5,11 C5.55228475,11 6,11.4477153 6,12 C6,12.5522847 5.55228475,13 5,13 L3,13 C2.44771525,13 2,12.5522847 2,12 C2,11.4477153 2.44771525,11 3,11 Z M12,2 C12.5522847,2 13,2.44771525 13,3 L13,5 C13,5.55228475 12.5522847,6 12,6 C11.4477153,6 11,5.55228475 11,5 L11,3 C11,2.44771525 11.4477153,2 12,2 Z M12,18 C12.5522847,18 13,18.4477153 13,19 L13,21 C13,21.5522847 12.5522847,22 12,22 C11.4477153,22 11,21.5522847 11,21 L11,19 C11,18.4477153 11.4477153,18 12,18 Z"
+																		fill="#000000" fill-rule="nonzero" opacity="0.3" />
+																			<circle fill="#000000" opacity="0.3" cx="12" cy="12"
+																		r="2" />
+																			<path
+																		d="M12,17 C14.7614237,17 17,14.7614237 17,12 C17,9.23857625 14.7614237,7 12,7 C9.23857625,7 7,9.23857625 7,12 C7,14.7614237 9.23857625,17 12,17 Z M12,19 C8.13400675,19 5,15.8659932 5,12 C5,8.13400675 8.13400675,5 12,5 C15.8659932,5 19,8.13400675 19,12 C19,15.8659932 15.8659932,19 12,19 Z"
+																		fill="#000000" fill-rule="nonzero" />
+																		</g>
+																	</svg> <!--end::Svg Icon-->
+															</span>
+														</div>
+														<div class="wizard-label">
+															<h3 class="wizard-title">Complaints</h3>
+														</div>
+													</div>
+												</div>
+												<div class="wizard-step" data-wizard-type="step">
+													<div class="wizard-wrapper">
+														<div class="wizard-icon">
+															<span class="svg-icon svg-icon-2x"> <!--begin::Svg Icon | path:assets/media/svg/icons/Shopping/Credit-card.svg-->
+																<svg xmlns="http://www.w3.org/2000/svg"
+																	xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+																	height="24px" viewBox="0 0 24 24" version="1.1">
+																		<g stroke="none" stroke-width="1" fill="none"
+																		fill-rule="evenodd">
+																			<rect x="0" y="0" width="24" height="24" />
+																			<rect fill="#000000" opacity="0.3" x="2" y="5"
+																		width="20" height="14" rx="2" />
+																			<rect fill="#000000" x="2" y="8" width="20"
+																		height="3" />
+																			<rect fill="#000000" opacity="0.3" x="16" y="14"
+																		width="4" height="2" rx="1" />
+																		</g>
+																	</svg> <!--end::Svg Icon-->
+															</span>
+														</div>
+														<div class="wizard-label">
+															<h3 class="wizard-title">Prescription</h3>
+														</div>
+													</div>
+												</div>
+												<div class="wizard-step" data-wizard-type="step">
+													<div class="wizard-wrapper">
+														<div class="wizard-icon">
+															<span class="svg-icon svg-icon-2x"> <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\themes\metronic\theme\html\demo5\dist/../src/media/svg/icons\Devices\Printer.svg-->
+																<svg xmlns="http://www.w3.org/2000/svg"
+																	xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+																	height="24px" viewBox="0 0 24 24" version="1.1">
+    																<g stroke="none" stroke-width="1" fill="none"
+																		fill-rule="evenodd">
+        																<rect x="0" y="0" width="24" height="24" />
+        																	<path
+																		d="M16,17 L16,21 C16,21.5522847 15.5522847,22 15,22 L9,22 C8.44771525,22 8,21.5522847 8,21 L8,17 L5,17 C3.8954305,17 3,16.1045695 3,15 L3,8 C3,6.8954305 3.8954305,6 5,6 L19,6 C20.1045695,6 21,6.8954305 21,8 L21,15 C21,16.1045695 20.1045695,17 19,17 L16,17 Z M17.5,11 C18.3284271,11 19,10.3284271 19,9.5 C19,8.67157288 18.3284271,8 17.5,8 C16.6715729,8 16,8.67157288 16,9.5 C16,10.3284271 16.6715729,11 17.5,11 Z M10,14 L10,20 L14,20 L14,14 L10,14 Z"
+																		fill="#000000" />
+        																<rect fill="#000000" opacity="0.3" x="8" y="2"
+																		width="8" height="2" rx="1" />
+    																</g>
+																</svg> <!--end::Svg Icon-->
+															</span>
+														</div>
+														<div class="wizard-label">
+															<h3 class="wizard-title">Prescription Print</h3>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<!--end: Wizard Nav-->
+										<!--begin: Wizard Body-->
+										<div class="wizard-body py-8 px-8 py-lg-20 px-lg-10">
+											<!--begin: Wizard Form-->
+											<div class="row">
+												<div class="offset-xxl-2 col-xxl-8">
+													<form class="form" id="kt_form">
+														<!--begin: Wizard Step 1-->
+														<div class="pb-5" data-wizard-type="step-content"
+															data-wizard-state="current">
+
+															<div class="mb-10 d-flex justify-content-between">
+																<h4 class="font-weight-bold text-dark">Patient
+																	Details</h4>
+
+																<!-- Button trigger modal-->
+																<button type="button" class="btn btn-primary"
+																	id="patient_history" data-toggle="modal"
+																	data-target="#patientHistory">Patient History</button>
+
+																<!-- Modal-->
+																<div class="modal fade" id="patientHistory"
+																	tabindex="-1" role="dialog"
+																	aria-labelledby="staticBackdrop" aria-hidden="true">
+																	<div class="modal-dialog modal-dialog-scrollable"
+																		role="document">
+																		<div class="modal-content">
+																			<div class="modal-header">
+																				<h5 class="modal-title" id="history_patient_name"></h5>
+																				<button type="button" class="close"
+																					data-dismiss="modal" aria-label="Close">
+																					<i aria-hidden="true" class="ki ki-close"></i>
+																				</button>
+																			</div>
+																			<div class="modal-body">
+																				<div data-scroll="true" data-height="300">
+																					<div
+												class="datatable datatable-bordered datatable-head-custom"
+												id="kt_history_datatable"></div>
+																				</div>
+																			</div>
+																			<div class="modal-footer">
+																				<button type="button"
+																					class="btn btn-light-primary font-weight-bold"
+																					data-dismiss="modal">Close</button>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+
+															<div class="row">
+																<div class="col-xl-6">
+																	<div class="form-group">
+																		<label>Date</label> <input type="text"
+																			class="form-control form-control-solid form-control-lg"
+																			name="date" id="date" />
+																	</div>
+																</div>
+																<div class="col-xl-6">
+																	<div class="form-group">
+																		<label>Patient Name</label><span class="text-danger">*</span>
+																		<div class="typeahead">
+																			<input type="text"
+																				class="form-control form-control-solid form-control-lg"
+																				name="patientName" id="patient_name" />
+																		</div>
+																	</div>
+
+																</div>
+															</div>
+															<div class="row">
+																<div class="col-xl-6">
+																	<div class="form-group">
+																		<label>Aadhar No</label> <input type="number"
+																			class="form-control form-control-solid form-control-lg"
+																			name="adhar_no" id="aadhar_no" />
+																	</div>
+																</div>
+																<div class="col-xl-6">
+																	<div class="form-group">
+																		<label>Patient Code</label> <input type="text"
+																			class="form-control form-control-solid form-control-lg"
+																			name="patient_code" id="patient_code" disabled />
+																	</div>
+																</div>
+															</div>
+															<div class="row">
+																<div class="col-xl-6">
+																	<div class="form-group">
+																		<label>Age</label><span class="text-danger">*</span> <input
+																			type="text"
+																			class="form-control form-control-solid form-control-lg"
+																			placeholder="x year y month" name="age" id="age" />
+																	</div>
+																</div>
+																<div class="col-xl-6">
+																	<div class="form-group">
+																		<label>Date of Birth </label> <input type="text"
+																			class="form-control form-control-solid form-control-lg"
+																			placeholder="DD/MM/YYYY" name="dob" id="dob" />
+																	</div>
+																</div>
+															</div>
+															<div class="row">
+																<div class="col-xl-6">
+																	<div class="form-group">
+																		<label>Village/City</label> <select name="village"
+																			id="village" class="form-control form-control-solid">
+																			<option value="" disabled selected hidden>Select
+																				Village/City</option>
+																		</select>
+																	</div>
+																</div>
+																<div class="col-xl-6">
+																	<div class="form-group">
+																		<label>Blood Group</label> <select name="bloodGroup"
+																			id="blood_group"
+																			class="form-control form-control-solid">
+																			<option value="" disabled selected hidden>Select
+																				Blood Group</option>
+																			<option value="o+">O+</option>
+																			<option value="a+">A+</option>
+																			<option value="b+">B+</option>
+																			<option value="ab+">AB+</option>
+																			<option value="o-">O-</option>
+																			<option value="a-">A-</option>
+																			<option value="b-">B-</option>
+																			<option value="ab-">AB-</option>
+																		</select>
+																	</div>
+																</div>
+															</div>
+
+															<div class="row">
+
+																<div class="col-xl-6">
+																	<div class="form-group">
+																		<label>Mobile No</label> <input type="number"
+																			class="form-control form-control-solid form-control-lg"
+																			name="mobileNo" id="mobile_no" />
+																	</div>
+																</div>
+																<div class="col-xl-6">
+																	<div class="form-group">
+																		<label>Gender</label> <select name="gender"
+																			id="gender" class="form-control form-control-solid">
+																			<option value="" disabled selected hidden>Select
+																				Gender</option>
+																			<option value="male">Male</option>
+																			<option value="female">Female</option>
+																		</select>
+																	</div>
+																</div>
+
+															</div>
+
+														</div>
+														<!--end: Wizard Step 1-->
+														<!--begin: Wizard Step 2-->
+														<div class="pb-5" data-wizard-type="step-content">
+															<h4 class="mb-10 font-weight-bold text-dark">Vital
+																Details</h4>
+															<div class="row">
+																<div class="col-xl-6">
+																	<div class="form-group">
+																		<label>Pulse</label> <input type="number"
+																			class="form-control form-control-solid form-control-lg"
+																			id="pulse" />
+																	</div>
+																</div>
+																<div class="col-xl-6">
+																	<div class="form-group col-xl-12">
+																		<label>BP</label>
+																		<div
+																			class="row justify-content-between align-items-baseline">
+																			<!-- <input type="number"
+																				class="col-xl-12 form-control form-control-solid form-control-lg"
+																				id="blood_pressure" /> -->
+
+																			<input type="number"
+																				class="col-xl-5 form-control form-control-solid form-control-lg"
+																				id="sbp" placeholder="SBP" /> /<input type="number"
+																				class="col-xl-5 form-control form-control-solid form-control-lg"
+																				id="dbp" placeholder="DBP" />
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<div class="row">
+																<div class="col-xl-6">
+																	<div class="form-group">
+																		<label>Weight</label> <input type="number"
+																			class="form-control form-control-solid form-control-lg"
+																			id="weight" />
+																	</div>
+																</div>
+																<div class="col-xl-6">
+																	<div class="form-group">
+																		<label>Height</label> <input type="number"
+																			class="form-control form-control-solid form-control-lg"
+																			id="height" />
+																	</div>
+																</div>
+															</div>
+															<div class="row">
+																<div class="col-xl-6">
+																	<div class="form-group">
+																		<label>HB</label> <input type="number"
+																			class="form-control form-control-solid form-control-lg"
+																			id="hb" />
+																	</div>
+																</div>
+																<div class="col-xl-6">
+																	<div class="form-group">
+																		<label>Temp</label> <input type="number"
+																			class="form-control form-control-solid form-control-lg"
+																			id="temp" />
+																	</div>
+																</div>
+															</div>
+															<div class="row">
+																<div class="col-xl-6">
+																	<div class="form-group col-xl-12">
+																		<label>Sugar</label>
+																		<div
+																			class="row justify-content-between align-items-baseline">
+																			<input type="number"
+																				class="form-control form-control-solid form-control-lg col-xl-4"
+																				id="f" placeholder="Fasting" /> <input
+																				type="number"
+																				class="form-control form-control-solid form-control-lg col-xl-4"
+																				id="p" placeholder="Post meal" /> <input
+																				type="number"
+																				class="form-control form-control-solid form-control-lg col-xl-4"
+																				id="r" placeholder="Random" />
+																		</div>
+																	</div>
+																</div>
+																<div class="col-xl-6">
+																	<div class="form-group">
+																		<label>Other</label> <input type="text"
+																			class="form-control form-control-solid form-control-lg"
+																			id="other" />
+																	</div>
+																</div>
+															</div>
+
+
+														</div>
+														<!--end: Wizard Step 2-->
+														<!--begin: Wizard Step 3-->
+														<div class="pb-5" data-wizard-type="step-content">
+															<h4 class="mb-10 font-weight-bold text-dark">Complaints</h4>
+															<div class="form-group">
+																<label>Complaints</label><select name="complaints_name"
+																	id="complaints_name"
+																	class="form-control form-control-solid form-control-lg select2"
+																	multiple="multiple">
+
+																</select>
+															</div>
+															<div class="form-group">
+																<textarea type="text"
+																	class="form-control form-control-solid form-control-lg"
+																	rows="3" id="complaints_desc"></textarea>
+															</div>
+															<div class="form-group">
+																<label>Other Complaints</label> <input type="text"
+																	class="form-control form-control-solid form-control-lg"
+																	name="other_complaints" id="other_complaints" />
+															</div>
+															<div class="form-group">
+																<label>Diagnosis</label> <select name="diagnosis_name"
+																	id="diagnosis_name"
+																	class="form-control form-control-solid form-control-lg">
+																	<option value="" disabled selected hidden>Select
+																		Diagnosis</option>
+																</select>
+															</div>
+															<div class="form-group">
+																<input type="text"
+																	class="form-control form-control-solid form-control-lg"
+																	id="diagnosis_desc" />
+															</div>
+
+
+															<div class="form-group">
+																<label>K/C/O</label> <input
+																	class="form-control form-control-solid form-control-lg"
+																	id="kco" />
+															</div>
+
+															<div class="form-group">
+																<label>Allergy</label> <input
+																	class="form-control form-control-solid form-control-lg"
+																	id="allergy" />
+															</div>
+
+															<!--end::Select-->
+														</div>
+														<!--end: Wizard Step 3-->
+														<!--begin: Wizard Step 4-->
+														<div class="pb-5" data-wizard-type="step-content">
+															<h4 class="mb-10 font-weight-bold text-dark">Prescription</h4>
+
+															<div class="row">
+																<select class="form-control col-4" id="templateList">
+																	<option value="" disabled selected hidden>Select
+																		Medicine Template</option>
+																</select>
+																<button type="button" id="addTemplate"
+																	class="btn btn-primary col-2 ml-5">Add
+																	Template</button>
+
+															</div>
+
+															<div class="card-body " style="padding-left: 2.25rem;">
+																<div class="repeater">
+																	<!-- <div id="kt_repeater_1"> -->
+																	<div class="form-group row">
+																		<div data-repeater-list="prescriptionList"
+																			class="col-lg-12">
+																			<div data-repeater-item
+																				class="form-group row align-items-center">
+																				<div class="row col-lg-12">
+																					<div>
+																						<label>No:</label>
+																						<p></p>
+																						<h6>1</h6>
+																						<div class="d-md-none mb-2"></div>
+																					</div>
+																					<div class="col-md-3">
+																						<label>Medicine Name:</label> <select
+																							class="form-control" id="medicineName"
+																							name="medicineName">
+																							<option value="" disabled selected hidden>Medicine
+																								Name</option>
+																						</select>
+																						<div class="d-md-none mb-2"></div>
+																					</div>
+																					<div class="col-md-3">
+																						<label>Type:</label> <select class="form-control"
+																							name="type" id="type">
+																							<option value="" disabled selected hidden>Medicine
+																								Type</option>
+																						</select>
+																						<div class="d-md-none mb-2"></div>
+																					</div>
+																					<div class="col-md-2">
+																						<label>Dose:</label> <input class="form-control"
+																							name="dose" id="dose" type="text"
+																							placeholder="enter dose" />
+																						<div class="d-md-none mb-2"></div>
+																					</div>
+																					<div class="col-md-2">
+																						<label>Time:</label> <input class="form-control"
+																							name="time" id="time" type="text"
+																							placeholder="enter time" />
+																						<div class="d-md-none mb-2"></div>
+																					</div>
+
+																					<input class="form-control" name="printable"
+																						id="printable" type="hidden" />
+
+																					<div class="col-md-1">
+																						<label class="d-flex justify-content-center">Special</label>
+																						<p></p>
+																						<div
+																							class="checkbox-inline justify-content-center">
+																							<label class="checkbox checkbox-success">
+																								<input type="checkbox" name="isSpecial"
+																								id="isSpecial" /> <span></span>
+																							</label>
+																						</div>
+																					</div>
+																					<!-- <div class="col-md-1">
+																						<label class="d-flex justify-content-center">Remark</label>
+																						<p></p>
+																						<div
+																							class="checkbox-inline justify-content-center">
+																							<label class="checkbox checkbox-success">
+																								<input type="checkbox" id="isRemark" /> <span></span>
+																							</label>
+																						</div>
+																					</div> -->
+																					<div class="mt-7">
+																						<a href="javascript:;" data-repeater-delete=""
+																							id="deleteRow"
+																							class="btn font-weight-bold btn-danger btn-icon btn-light-danger">
+																							<i class="la la-trash-o"></i>
+																						</a>
+																					</div>
+																				</div>
+																				<div
+																					class="col-md-12 d-flex align-items-baseline mt-3">
+																					<label class="mr-5">Remark</label> <select
+																						type="text" class="form-control" name="remark"
+																						id="remark">
+																						<option value="" disabled selected hidden>Select
+																							Remark</option>
+																					</select>
+																				</div>
+																				<input type="hidden" class="form-control"
+																					name="is_printable" id="is_printable" />
+																			</div>
+																		</div>
+																	</div>
+																	<div class="form-group row justify-content-end">
+																		<div class="mr-5">
+																			<a href="javascript:;" data-repeater-create=""
+																				id="createRow"
+																				class="btn btn-sm font-weight-bolder btn-primary">
+																				<i class="la la-plus"></i>Add
+																			</a>
+																		</div>
+																	</div>
+																</div>
+															</div>
+
+															<div class="row">
+																<label class="col-2">Select Advice</label>
+																<div class="form-group col-md-8">
+																	<select name="advice_name" id="advice_name"
+																		class="form-control form-control-solid form-control-lg select2"
+																		multiple="multiple">
+
+																	</select>
+																</div>
+															</div>
+															<div class="row">
+																<label class="col-2">Special Advise:</label>
+																<div class="form-group mb-1 col-8">
+																	<textarea class="form-control" id="special_advise"
+																		rows="5"></textarea>
+																</div>
+															</div>
+
+
+														</div>
+														<!--end: Wizard Step 4-->
+														<!--begin: Wizard Step 5-->
+														<div class="pb-5" data-wizard-type="step-content">
+															<h4 class="mb-10 font-weight-bold text-dark">Prescription
+																Print</h4>
+															<div class="form-group row">
+																<div class="col-9 col-form-label">
+																	<div class="checkbox-list">
+
+																		<div class="row">
+																			<div class="col-md-6">
+																				<label class="checkbox checkbox-lg"> <input
+																					type="checkbox" id="isHeader" checked /> <span></span>
+																					Header
+																				</label> <label class="checkbox checkbox-lg"> <input
+																					type="checkbox" id="isLogo" checked /> <span></span>
+																					Logo
+																				</label> <label class="checkbox checkbox-lg"> <input
+																					type="checkbox" id="isVital" checked /> <span></span>
+																					Vital Details
+																				</label> <label class="checkbox checkbox-lg"> <input
+																					type="checkbox" id="isHeightWeight" checked /> <span></span>
+																					Height/Weight
+																				</label>
+																			</div>
+
+
+																			<div class="col-md-6">
+																				<label class="checkbox checkbox-lg"> <input
+																					type="checkbox" id="isComplaint" checked /> <span></span>
+																					Complaint
+																				</label><label class="checkbox checkbox-lg"> <input
+																					type="checkbox" id="isKco" checked /> <span></span>
+																					K/C/O
+																				</label><label class="checkbox checkbox-lg"> <input
+																					type="checkbox" id="isAllergy" checked /> <span></span>
+																					Allergy
+																				</label> <label class="checkbox checkbox-lg"> <input
+																					type="checkbox" id="isNotice" checked /> <span></span>
+																					Notice
+																				</label>
+																			</div>
+																		</div>
+
+
+																	</div>
+																</div>
+															</div>
+														</div>
+														<!--end: Wizard Step 5-->
+														<!--begin: Wizard Actions-->
+														<div
+															class="d-flex justify-content-between border-top mt-5 pt-10">
+															<div class="mr-2">
+																<button type="button"
+																	class="btn btn-light-primary font-weight-bolder text-uppercase px-9 py-4"
+																	data-wizard-type="action-prev">Previous</button>
+															</div>
+															<div>
+																<button type="submit"
+																	class="btn btn-success font-weight-bolder text-uppercase px-9 py-4"
+																	id="addFromWizardData" data-wizard-type="action-submit">Submit</button>
+																<button type="button"
+																	class="btn btn-primary font-weight-bolder text-uppercase px-9 py-4"
+																	data-wizard-type="action-next">Next</button>
+															</div>
+														</div>
+														<!--end: Wizard Actions-->
+													</form>
+												</div>
+												<!--end: Wizard-->
+											</div>
+											<!--end: Wizard Form-->
+										</div>
+										<!--end: Wizard Body-->
+									</div>
+									<!--end: Wizard-->
+								</div>
+							</div>
+
+
+						</div>
+						<!--end::Container-->
+					</div>
+					<!--end::Entry-->
+				</div>
+				<!--end::Content-->
+				<!--begin::Footer-->
+				<jsp:include page="../common/footer.jsp"></jsp:include>
+				<!--end::Footer-->
+			</div>
+			<!--end::Wrapper-->
+		</div>
+		<!--end::Page-->
+	</div>
+	<!--end::Main-->
+
+
+	<jsp:include page="../common/jsfiles.jsp"></jsp:include>
+	<script type="text/javascript"
+		src="<%=VO_Face.getContainerDeployPath()%>/ResourceBundles/Resources/assets/js/pages/widgets.js"></script>
+	<script type="text/javascript"
+		src="<%=VO_Face.getContainerDeployPath()%>/ResourceBundles/Resources/assets/js/pages/custom/wizard/wizard-2.js"></script>
+	<script type="text/javascript"
+		src="<%=VO_Face.getContainerDeployPath()%>/ResourceBundles/Resources/assets/js/pages/crud/forms/widgets/form-repeater.js"></script>
+	<script
+		src="<%=VO_Face.getContainerDeployPath()%>/ResourceBundles/Resources/assets/js/pages/crud/forms/widgets/select2.js?v=7.2.8"></script>
+
+
+	<script type="text/javascript">
+	
+	var basePath='<%=basePath%>';    
+	var base='<%=base%>';  
+	    
+	
+	$( document ).ready(function() {
+		var date = new Date();
+		var today = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+		$('#date').val(today);
+	});
+
+
+
+$("#date,#dob").change(function() {
+	var in_dob = $('#dob').val();
+
+    let today = new Date();
+    let dob = in_dob.split("/");
+
+    let inputDate = new Date(dob[1] + "/" + dob[0] + "/" + dob[2]);
+    
+    
+    let birthMonth,birthDate,birthYear;
+    let birthDetails = {
+        date:inputDate.getDate(),
+        month:inputDate.getMonth()+1,
+        year:inputDate.getFullYear()
+    }
+    let currentYear = today.getFullYear();
+    let currentMonth = today.getMonth()+1;
+    let currentDate = today.getDate();
+
+
+    birthYear = currentYear - birthDetails.year;
+
+    if(currentMonth >= birthDetails.month){
+        birthMonth = currentMonth - birthDetails.month;
+    }
+    else{
+        birthYear--;
+        birthMonth = 12 + currentMonth - birthDetails.month;
+    }
+
+	    
+	    $('#age').val(birthYear + " y " + birthMonth + " m");
+	
+});
+
+
+/* $('#remark').hide();
+
+$(document).on("change",'#isRemark', function(e) {
+
+	debugger;
+	$('#remark').toggle();
+}); */
+
+$('#patient_history').hide();
+
+
+$('#patient_name').change(function(){
+	
+	var pcode = $('#patient_code').val();
+	console.log(pcode);
+	
+	if(pcode != null || pcode != ''){
+		$('#patient_history').show();
+	}else{
+		$('#patient_history').hide();
+	}
+
+	var patient_name = $(this).val();
+		
+	$.ajax({
+		url : base + "/dssAPI/dfapi/getPatientDetails",
+		type : "post",
+		dataType : "json",
+		async : false,
+		data : {"flag":1,},
+		success:function(data)
+        {
+			
+			const row = data.find(d => d.patient_name == patient_name);
+			
+			console.log(row);
+			
+			if(row != null){
+				$('#village').val(row.city_desc);
+				
+				if(row.birth_date != "0001-01-01 BC"){
+					let date = new Date(row.birth_date);
+					$('#dob').val(date.getDate() + "/" + (date.getMonth()+1) + "/" + date.getFullYear());
+					console.log($('#dob').val());
+				}
+				$('#age').val(row.age);
+				$('#aadhar_no').val(row.aadhar_no);
+				$('#blood_group').val(row.blood_group);
+				$('#mobile_no').val(row.mobile_no);
+				$('#patient_code').val(row.patient_code);
+				$('#patient_code').addClass("text-muted");
+			}else{
+				$('#patient_code').val("");
+			}
+
+        }
+	});	
+})
+
+$.urlParam = function(name){
+	var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+	return results != null ? results[1] || 0 : 0;
+}
+			     
+var query = $.urlParam('pcode');
+
+console.log("data " + query);
+
+if(query != '' && query != null){	
+	
+	$('#patient_history').show();
+	
+	$.ajax({
+		url : base + "/dssAPI/dfapi/getPatientDetails",
+		type : "post",
+		dataType : "json",
+		async : false,
+		data : {"flag":1,},
+		success:function(data)
+        {
+			
+			const row = data.find(d => d.patient_name == query || d.patient_code == query || d.mobile_no == query);
+			
+			console.log(row);
+			
+			if(row != null){
+				
+				if(row.birth_date != "0001-01-01 BC"){
+					let date = new Date(row.birth_date);
+					$('#dob').val(date.getDate() + "/" + (date.getMonth()+1) + "/" + date.getFullYear());
+				}
+				
+				$('#village').val(row.city_desc);
+				$('#age').val(row.age);
+				$('#aadhar_no').val(row.aadhar_no);
+				$('#blood_group').val(row.blood_group);
+				$('#mobile_no').val(row.mobile_no);
+				$('#gender').val(row.gender);
+				$('#patient_name').val(row.patient_name);
+				$('#patient_code').val(row.patient_code);
+				$('#patient_code').addClass("text-muted");
+			}else{
+				$('#patient_code').val("");
+			}
+
+        }
+	});	
+}	
+
+
+
+$('#patient_history').click(function(){	
+	let patient_code = $('#patient_code').val();
+	let patient_name = $('#patient_name').val();
+	$('#history_patient_code').text(patient_code);
+	$('#history_patient_name').text(patient_name);
+	
+	
+	var KTDatatableRemoteAjaxDemo = function() {
+		// Private functions
+		// basic demo
+		var demo = function() {
+			var datatable = $('#kt_history_datatable')
+					.KTDatatable(
+							{
+								// datasource definition
+								data : {
+									type : 'remote',
+									source : {
+										read : {
+											url : base + "/dssAPI/dfapi/getPatientVisitHistory",
+											params: {
+												patient_code: patient_code,
+												},
+											// sample custom headers
+											// headers: {'x-my-custom-header': 'some value', 'x-test-header': 'the value'},
+											map : function(raw) {
+												// sample data mapping
+												var dataSet = raw;
+												console.log(raw);
+												if (typeof raw.data !== 'undefined') {
+													dataSet = raw.data;
+												}
+												return dataSet;
+											},
+										},
+									},
+									pageSize : 10,
+									serverPaging : true,
+									serverFiltering : true,
+									serverSorting : true,
+								},
+
+								// layout definition
+								layout : {
+									scroll : false,
+									footer : false,
+								},
+
+								// column sorting
+								sortable : true,
+
+								pagination : true,
+
+								search : {
+									input : $('#kt_datatable_search_query'),
+									key : 'generalSearch'
+								},
+
+								// columns definition
+								columns : [
+										{
+											field : 'visit_id',
+											title : '#',
+											sortable : 'asc',
+											width : 30,
+											type : 'number',
+											selector : false,
+											textAlign : 'center',
+										},
+										{
+											field : 'visit_date',
+											title : 'Visit Date\n(YYYY/MM/DD)',
+										}
+				
+									 ],
+
+							});
+
+		};
+
+		return {
+			// public functions
+			init : function() {
+				demo();
+			},
+		};
+	}();
+
+	jQuery(document).ready(function() {
+		KTDatatableRemoteAjaxDemo.init();
+	});
+	
+	
+});
+
+
+$.ajax({
+		url : base + "/dssAPI/dfapi/getMedicineType",
+		type : "post",
+		dataType : "json",
+		async : false,
+		data : {"flag":1},
+		success:function(data)
+	    {
+			data.forEach((element)=> {
+				
+			        $('#type').append($(document.createElement('option')).prop({
+		                value: element.medicine_type_name,
+		                text: element.medicine_type_name
+		            }))
+				
+			});   
+	    }
+	});	
+	
+	
+$('#medicineName').change(function(){
+	
+	var medicine_name = $('#medicineName').val();
+	
+	$.ajax({
+		url : base + "/dssAPI/dfapi/getMedicineDetails",
+		type : "post",
+		dataType : "json",
+		async : false,
+		data : {"flag":1},
+		success:function(data)
+        {
+			if(data != null){
+				const row = data.find(d => d.medicine_name == medicine_name);
+				
+				console.log(row);
+				
+				if(row != null){
+					
+					$('#type').val(row.medicine_type);
+					
+				}
+				
+			}  
+        }
+	});
+});
+	
+	
+$.ajax({
+	url : base + "/dssAPI/dfapi/getRemark",
+	type : "post",
+	dataType : "json",
+	async : false,
+	data : {"flag":1},
+	success:function(data)
+    {
+		data.forEach((element)=> {
+			
+		        $('#remark').append($(document.createElement('option')).prop({
+	                value: element.remark_desc,
+	                text: element.remark_name
+	            }))
+			
+		});   
+    }
+});	
+
+	
+	$.ajax({
+		url : base + "/dssAPI/dfapi/getAdvice",
+		type : "post",
+		dataType : "json",
+		async : false,
+		data : {"flag":1},
+		success:function(data)
+	    {
+			data.forEach((element)=> {
+				
+			        $('#advice_name').append($(document.createElement('option')).prop({
+		                value: element.advice_desc,
+		                text: element.advice_name
+		            }))
+				
+			});   
+	    }
+	});	
+	
+	
+	
+	$.ajax({
+		url : base + "/dssAPI/dfapi/getCityDetails",
+		type : "post",
+		dataType : "json",
+		async : false,
+		data : {"flag":1},
+		success:function(data)
+        {
+			data.forEach((element)=> {
+				
+			        $('#village').append($(document.createElement('option')).prop({
+		                value: element.city_name,
+		                text: element.city_name
+		            }))
+				
+			});   
+        }
+	});	
+	
+	
+	
+	$.ajax({
+		url : base + "/dssAPI/dfapi/getComplaints",
+		type : "post",
+		dataType : "json",
+		async : false,
+		data : {"flag":1},
+		success:function(data)
+        {
+			data.forEach((element)=> {
+				
+			        $('#complaints_name').append($(document.createElement('option')).prop({
+		                value: element.complaint_desc,
+		                text: element.complaint_name
+		            }))
+				
+			});   
+        }
+	});	
+	
+	
+	
+	$.ajax({
+		url : base + "/dssAPI/dfapi/getDiagnosis",
+		type : "post",
+		dataType : "json",
+		async : false,
+		data : {"flag":1},
+		success:function(data)
+        {
+			data.forEach((element)=> {
+				
+			        $('#diagnosis_name').append($(document.createElement('option')).prop({
+		                value: element.diagnosis_desc,
+		                text: element.diagnosis_name
+		            }))
+				
+			});   
+        }
+	});	
+	
+	
+	
+	$.ajax({
+		url : base + "/dssAPI/dfapi/getMedicineTemplateMaster",
+		type : "post",
+		dataType : "json",
+		async : false,
+		data : {"flag":1},
+		success:function(data)
+        {
+			data.forEach(function(element) {
+				
+			        $('#templateList').append($(document.createElement('option')).prop({
+		                value: element.template_id,
+		                text: element.template_name
+		            }))
+				
+			});   
+        }
+	});
+	
+	 $('#complaints_desc').hide();
+	 $('#diagnosis_desc').hide();
+
+	
+	 $('#complaints_name').change(function(){
+		 		
+		 	$('#complaints_desc').show();
+		 	
+		 	var complaints_name = $(this).val();
+		 	
+		 	console.log(complaints_name);
+			
+			var complaints = complaints_name.join("\n> ");
+			
+			console.log(complaints);
+			
+			$('#complaints_desc').val("> ".concat(complaints));
+	 });
+	 
+	 $('#diagnosis_name').change(function(){
+	 		
+		 	$('#diagnosis_desc').show();
+		 	
+		 	var diagnosis_name = $(this).val();
+			$('#diagnosis_desc').val(diagnosis_name); 
+	 });
+	 
+	 $('#advice_name').change(function(){
+	 				 	
+		 	var advice_name = $(this).val();
+		 	
+		 	var advice = advice_name.join("\n> ");
+			
+			$('#special_advise').val("> ".concat(advice));	
+			
+	 });
+	 
+	 
+	
+	 $('#addTemplate').click(function(){
+		 		 
+		var template_id =  $( "#templateList" ).val();
+		var $repeater =  $('.repeater').repeater();
+		
+		$.ajax({
+			url : base + "/dssAPI/dfapi/getMedicineTemplateMaster",
+			type : "post",
+			dataType : "json",
+			async : false,
+			data : {"flag":1, "template_id": template_id},
+			success:function(data)
+        	{
+				const row = data.find(d => d.template_id == template_id);
+				
+				console.log(row);
+		
+				const parsedData = JSON.parse(row["template_desc"]);
+				debugger;
+				 for(i = 0; i < parsedData.length - 1; i++){
+					$('#createRow').trigger('click');
+				 }
+				
+					 $repeater.setList(parsedData);
+			
+					 
+        	}
+		});	
+   	});
+
+	 var isLogoValue = true, isHeaderValue = true, isHeightWeightValue = true, 
+	 isVitalValue = true, isComplaintValue = true, isKcoValue = true, 
+	 isAllergyValue = true, isNoticeValue = true;
+	 
+	$("#isLogo").click(function() {
+	   isLogoValue = $(this).is(':checked');
+	});
+	
+	
+	 $("#isHeader").click(function() {
+		isHeaderValue = $(this).is(':checked');
+	});
+	
+	
+	 $("#isHeightWeight").click(function() {
+	   isHeightWeightValue = $(this).is(':checked');
+	});
+			
+	 $("#isVital").click(function() {
+	   isVitalValue = $(this).is(':checked');
+	});
+	 
+	 $("#isComplaint").click(function() {
+		 isComplaintValue = $(this).is(':checked');
+	});
+	 
+	 $("#isKco").click(function() {
+		   isKcoValue = $(this).is(':checked');
+	});
+		 
+	 $("#isAllergy").click(function() {
+		 isAllergyValue = $(this).is(':checked');
+	});
+	 
+	 $("#isNotice").click(function() {
+		 isNoticeValue = $(this).is(':checked');
+	});
+			
+	
+	
+
+		$('#addFromWizardData').click(function() {
+			
+			
+			$('.repeater').repeater();
+			//get the values of the inputs as a formatted object
+			var val = $('.repeater').repeaterVal();
+
+			var list = [];
+			
+			val["prescriptionList"].forEach(function(item){
+				var isSpecial;
+				if(item["isSpecial"][0] == "on"){
+					isSpecial = true;
+				}else{
+					isSpecial = false;
+				}
+				
+				
+				if(item["medicineName"] != ""){
+					list.push({
+						medicineName : item["medicineName"],
+						type : item["type"],
+						dose : item["dose"],
+						time : item["time"],
+						isSpecial : isSpecial,
+						remark : item["remark"],
+						is_printable : 'Y',
+					})
+				}
+				
+			});
+			
+			var jsonString = JSON.stringify(list);
+
+							/// Patient Details
+							var patient_name = $('#patient_name').val();
+							var date = $('#date').val();
+							var dob = $('#dob').val();
+							var age = $('#age').val();
+							var aadhar = $('#aadhar_no').val();
+							var patient_code = $('#patient_code').val();
+							var mobile_no = $('#mobile_no').val();
+							var city_desc = $('#village').val();
+							var blood_group = $('#blood_group').val();
+							var gender = $('#gender').val();
+							
+							/// Vital Details
+							var pulse = $('#pulse').val();
+							var weight = $('#weight').val();
+							var hb = $('#hb').val();
+							var temperature = $('#temp').val();
+							var other = $('#other').val();
+							
+							var sbp = $('#sbp').val();
+							var dbp = $('#dbp').val();
+							
+							var bp_obj = { "s" : sbp, "d" : dbp }; 
+							
+							var blood_pressure = JSON.stringify(bp_obj);
+							
+							var f = $('#f').val();
+							var p = $('#p').val();
+							var r = $('#r').val();
+							
+							var sugar_obj = { "f" : f, "p" : p, "r" : r };
+							
+							var sugar = JSON.stringify(sugar_obj);
+							
+							/// Complaints
+							var complaints_desc = $('#complaints_desc').val();
+							var other_complaints = $('#other_complaints').val();
+							var diagnosis_desc = $('#diagnosis_desc').val();
+														
+							/// Prescription
+							var special_advise = $('#special_advise').val();
+							var kco = $('#kco').val();
+							var allergy = $('#allergy').val();
+							var prescription_desc = jsonString;
+														
+							
+							var flag = 1; // Addition
+							
+							var print  = isLogoValue+"$"+isHeaderValue+"$"+isHeightWeightValue+"$"+isVitalValue+"$"+isComplaintValue+"$"+isKcoValue+"$"+isAllergyValue+"$"+isNoticeValue;
+
+							/// Patient Details							
+								
+								var patientDetails = patient_name+"$"+dob+"$"+age+"$"+aadhar+"$"+mobile_no+"$"+city_desc+"$"+blood_group+"$"+date+"$"+gender;
+								var vitalDetails = pulse+"$"+blood_pressure+"$"+weight+"$"+hb+"$"+temperature+"$"+sugar+"$"+other;
+								var complaintsDetails = complaints_desc+"$"+other_complaints+"$"+diagnosis_desc;
+								var prescriptionDetails = prescription_desc+"$"+special_advise+"$"+kco+"$"+allergy;
+							
+							if(patient_code == '' || patient_code == null){
+								
+							
+								$.ajax({
+									url : base + "/dssAPI/dfapi/insertWizardFormDetails",
+									type : "post",
+									dataType : "json",
+									async : false,
+									data : {
+										"patientDetails" : patientDetails,
+										"vitalDetails": vitalDetails,
+										"complaintsDetails": complaintsDetails,
+										"prescriptionDetails": prescriptionDetails,
+										"flag": flag,
+									},
+									success : function(response) {
+										if (response != null) {
+
+											if (response >= 1) {
+												
+												console.log(response);
+
+												var url = "prescription-print.jsp" + '?print=' + print + '&code=' + response;
+												
+												window.location.assign(url);	
+
+											}
+										}
+									}
+								});		
+							
+							}else{
+								
+							
+								$.ajax({
+									url : base + "/dssAPI/dfapi/updateWizardFormDetails",
+									type : "post",
+									dataType : "json",
+									async : false,
+									data : {
+										"patient_code": patient_code,
+										"vitalDetails": vitalDetails,
+										"complaintsDetails": complaintsDetails,
+										"prescriptionDetails": prescriptionDetails,
+										"flag": flag,
+									},
+									success : function(response) {
+										if (response != null) {
+
+											if (response >= 1) {
+												
+												var url = "prescription-print.jsp" + '?print=' + print + '&code=' + response;
+												
+												window.location.assign(url);	
+
+											}
+										}
+									}
+						
+							
+						});
+		}
+		});
+		
+		
+		 var pName = [];
+			
+			$.ajax({
+			url : base + "/dssAPI/dfapi/getPatientDetails",
+			type : "post",
+			dataType : "json",
+			async : false,
+			data : {"flag":1},
+			success:function(data)
+	        {
+				if(data != null){
+					data.forEach(function(e){
+						pName.push(e.patient_name);
+					})
+				}  
+	        }
+			});
+			
+		
+		
+		$.ajax({
+		url : base + "/dssAPI/dfapi/getMedicineDetails",
+		type : "post",
+		dataType : "json",
+		async : false,
+		data : {"flag":1},
+		success:function(data)
+        {
+			if(data != null){
+				data.forEach(function(e){
+					$('#medicineName').append($(document.createElement('option')).prop({
+		                value: e.medicine_name,
+		                text: e.medicine_name
+		            }))
+				})
+			}  
+        }
+		});
+				 
+		
+
+
+			var KTBootstrapDaterangepicker = function() {
+
+				// Private functions
+				var demos = function() {
+					// minimum setup
+					
+					
+					$('#dob').datepicker({
+						   rtl: KTUtil.isRTL(),
+						   todayHighlight: true,
+						   orientation: "bottom left",
+							
+							    format: 'dd/mm/yyyy'
+							   
+						  });
+					
+					
+					 $('.repeater').repeater({
+				               
+				            show: function () {
+				                $(this).slideDown();
+				            },
+
+				            hide: function (deleteElement) {                
+				                $(this).slideUp(deleteElement);                 
+				            }   
+				        });
+					 
+					 
+					 
+					 $('#advice_name').select2({
+				         placeholder: "Select a Advice",
+				      });
+					 
+					 $('#complaints_name').select2({
+				         placeholder: "Select a Complaint",
+				      });
+					 
+					 
+					 
+
+					 var bloodhound = new Bloodhound({
+		                  datumTokenizer: Bloodhound.tokenizers.whitespace,
+		                  queryTokenizer: Bloodhound.tokenizers.whitespace,
+		                  // `states` is an array of state names defined in "The Basics"
+		                  local: pName
+		              });
+
+		              $('#patient_name').typeahead({
+		                  hint: true,
+		                  highlight: true,
+		                  minLength: 1
+		              }, {
+		                  name: 'pName',
+		                  source: bloodhound
+		              });
+
+				}
+
+				return {
+					// public functions
+					init : function() {
+						demos();
+					}
+				};
+			}();
+
+			jQuery(document).ready(function() {
+				KTBootstrapDaterangepicker.init();
+			});
+	      
+	      
+	      $(".select2").css("width", "100%");
+	      
+	      
+	      function getVisitedPrescription(visit_id){
+	    	  $.ajax({
+	  			url : base + "/dssAPI/dfapi/getPatientDetails",
+	  			type : "post",
+	  			dataType : "json",
+	  			async : false,
+	  			data : {
+	  				"visit_id" : visit_id,
+	  				"flag" : 1
+	  				},
+	  			success:function(data)
+	  	        {
+	  				if(data != null){
+	  					data.forEach(function(e){
+	  						pName.push(e.patient_name);
+	  					})
+	  				}  
+	  	        }
+	  			});
+	      }
+
+</script>
+</body>
+</html>
+
+<%
+	} catch (Exception e) {
+		Logger.log(dbConnVar, "" + e);
+	}
+%>

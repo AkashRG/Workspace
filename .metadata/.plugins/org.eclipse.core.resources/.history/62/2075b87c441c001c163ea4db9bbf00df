@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.css">
+		<script src="//code.jquery.com/jquery.js"></script>
+		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>    
+        <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.js"></script>
+        
+        
+
+
+</head>
+<body>
+
+<body id="kt_body"
+	class="quick-panel-right demo-panel-right offcanvas-right header-fixed header-mobile-fixed aside-enabled aside-static page-loading">
+	
+	<div class="d-flex flex-column flex-root">
+		<!--begin::Page-->
+		<div class="d-flex flex-row flex-column-fluid page">
+			<!--begin::Aside-->
+		
+			<!--end::Aside-->
+			<!--begin::Wrapper-->
+			<div class="d-flex flex-column flex-row-fluid wrapper"
+				id="kt_wrapper">
+				<!--begin::Header-->
+				
+				<!--end::Header-->
+				<!--begin::Content-->
+				<div class="content d-flex flex-column flex-column-fluid"
+					id="kt_content">
+					<!--begin::Entry-->
+					<div class="d-flex flex-column-fluid">
+						<!--begin::Container-->
+						<div class="container">
+<div class="row align-items-center">
+												<div class="col-lg-9 col-xl-8">
+													<div class="row align-items-center">
+														<div class="col-md-4 my-2 my-md-0">
+															<div class="input-icon">
+																<input type="text" class="form-control" placeholder="Search..." id="kt_datatable_search_query" />
+																<span>
+																	<i class="flaticon2-search-1 text-muted"></i>
+																</span>
+															</div>
+														</div>	
+													</div>
+												</div>
+												<div class="col-lg-3 col-xl-4 mt-5 mt-lg-0">
+													<a href="#" class="btn btn-light-primary px-6 font-weight-bold">Search</a>
+												</div>
+											</div>
+						
+
+							<div class="row">
+								
+								<div class="col-xl-12">
+									<div class="card card-custom gutter-b">
+										<div class="card-body">
+										<div class="container text-center">
+
+  
+
+<table data-toggle="table" 
+       data-classes="table table-hover table-condensed"
+       data-striped="true"
+       data-sort-name="Quality"
+       data-sort-order="desc"
+       data-pagination="true"
+       id= "table-id"
+       >
+    <thead>
+										<tr>
+											<th class="col-xs-1" data-field="NO" data-sortable="true">No</th>
+											<th class="col-xs-2" data-field="Medicine_Name" data-sortable="true">Medicine Name</th>
+											<th class="col-xs-3" data-field="Medicine_Type" data-sortable="true">Medicine Type</th>
+											<th class="col-xs-4" data-field="Medicine_Category" data-sortable="true">Medicine category</th>
+
+
+										</tr>
+
+									</thead>
+    <tbody class="data">
+  
+        
+    </tbody>    
+</table>
+</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!--end::Container-->
+					</div>
+					<!--end::Entry-->
+				</div>
+				<!--end::Content-->
+				<!--begin::Footer-->
+				<jsp:include page="../common/footer.jsp"></jsp:include>
+				<!--end::Footer-->
+			</div>
+			<!--end::Wrapper-->
+		</div>
+		<!--end::Page-->
+	</div>
+	<!--end::Main-->
+
+
+
+
+<script>
+
+
+var medicine_id;
+var html = "";
+
+$.ajax({
+	url : "http://localhost:8080/dssAPI/dfapi/getMedicineDetails",
+	type : "post",
+	dataType : "json",
+	async : false,
+	data : {"medicine_id": medicine_id},
+	success:function(data)
+	{
+		  
+		
+		const row = data.find(d => d.medicine_id == medicine_id);
+		data.forEach((row)=> {
+			html +="<tr id= tr-id-2 class= tr-class-2>"
+			html += "<td>"+row.medicine_id+"</td>"; 
+			 html += "<td>"+row.medicine_name+"</td>";
+	            html += "<td>"+row.medicine_type+"</td>";
+	            html += "<td>"+row.medicine_category+"</td>";
+	            html +="</tr>"
+		
+		
+		});
+		 $(".data").html(html);
+	}
+});	
+
+
+
+$(document).ready(function (){
+	   var table = $('#table-id').DataTable();
+	   
+	  
+	});
+       
+
+
+
+
+function queryParams() {
+    return {
+        type: 'owner',
+        sort: 'updated',
+        direction: 'desc',
+        per_page: 100,
+        page: 1
+    };
+}
+
+$(document).ready(function(){
+	
+	
+	/*  $("#txt_searchall").on("keyup", function() {
+		 search_table($(this).val());
+	 });
+	 function search_table(value){
+		 $('table tbody tr').each(function(){
+			 var found = 'false';
+			 $(this).each(function(){
+				 if($(this).text().toLowerCase().indexOf(value.toLowerCase())>=0){
+					 found='true';
+				 }
+			 });
+			 if(found == 'true')
+				 {
+				 $(this).show();
+				 }
+			 else{
+				 $(this).hide();
+			 }
+		 });
+		 
+	 } */
+	
+	 /*  $("#txt_searchall").on("keyup", function() {
+	    var value = $(this).val().toLowerCase();
+	    $(".datatable tr").filter(function() {
+	      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+	    });
+	  }); */
+	
+	
+	  // Search all columns
+	   $('#kt_datatable_search_query').keyup(function(){
+	    // Search Text
+	    var search = $(this).val();
+
+	    // Hide all table tbody rows
+	    $('.datatable tr').hide();
+
+	    // Count total search result
+	    var len = $('.datatable tr:not(.notfound) td:contains("'+search+'")').length;
+
+	    if(len > 0){
+	      // Searching text in columns and show match row
+	      $('.datatable tr:not(.notfound) td:contains("'+search+'")').each(function(){
+	        $(this).closest('tr').show();
+	      });
+	    }else{
+	      $('.notfound').show();
+	    }
+
+	  });
+
+	 
+
+	});
+$.expr[":"].contains = $.expr.createPseudo(function(arg) {
+	   return function( elem ) {
+	     return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
+	   };
+	});
+
+
+</script>
+
+</body>
+</html>
+

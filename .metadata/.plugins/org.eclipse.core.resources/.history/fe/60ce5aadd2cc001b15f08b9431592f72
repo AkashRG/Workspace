@@ -1,0 +1,258 @@
+<%@page import="com.config.FaceConfig"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java"
+	import="java.util.*,com.config.ConnectionFactory,com.config.I18nUtility,com.customLog.Logger,com.faces.VO_Face"%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+	String base = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+	String dbConnVar = "BAFNA";
+	try {
+%>
+
+
+<jsp:include page="../common/header.jsp"></jsp:include>
+
+<body id="kt_body"
+	class="quick-panel-right demo-panel-right offcanvas-right header-fixed header-mobile-fixed aside-enabled aside-static page-loading">
+	<jsp:include page="/form/common/mobile-header.jsp"></jsp:include>
+	<div class="d-flex flex-column flex-root">
+		<!--begin::Page-->
+		<div class="d-flex flex-row flex-column-fluid page">
+			<!--begin::Aside-->
+			<jsp:include page="/form/common/sidebar.jsp"></jsp:include>
+			<!--end::Aside-->
+			<!--begin::Wrapper-->
+			<div class="d-flex flex-column flex-row-fluid wrapper"
+				id="kt_wrapper">
+				<!--begin::Header-->
+				<jsp:include page="/form/common/navbar.jsp"></jsp:include>
+				<!--end::Header-->
+				<!--begin::Content-->
+				<div class="content d-flex flex-column flex-column-fluid"
+					id="kt_content">
+					<!--begin::Entry-->
+					<div class="d-flex flex-column-fluid">
+						<!--begin::Container-->
+						<div class="container">
+
+
+
+							<form class="form" id="kt_form_1">
+								<div class=" col-lg-6 offset-lg-3 col-md-12 col-sm-12">
+									<div class="form-group">
+										<label>Patient Name</label> <input type="text"
+											class="form-control form-control-solid" id="patient_name" disabled/>
+									</div>
+									<div class="form-group">
+										<label>Patient Code</label> <input type="text"
+											class="form-control form-control-solid" id="patient_code" disabled/>
+									</div>
+									<div class="form-group">
+										<label>Mobile</label> <input type="text"
+											class="form-control form-control-solid" id="mobile_no" disabled/>
+									</div>
+									<div class="form-group">
+										<label>Payment mode</label> <select name="feesPaymentMode" id="feesPaymentMode"
+											class="form-control form-control-solid">
+											<option value="" disabled selected hidden>Select payment mode</option>
+											<option value="cash">Cash</option>
+											<option value="upi">UPI</option>
+											<option value="nb">Net Banking</option>
+											<option value="cheque">Cheque</option>
+										</select>
+									</div>
+									<div class="form-group">
+										<input type="text"
+											class="form-control form-control-solid" 
+											name="paymentMode" id="paymentMode"
+											placeholder="Enter number"/>
+									</div>
+									<div class="form-group">
+										<label>Amount</label> <input type="text"
+											class="form-control form-control-solid" name="fees_amount"
+											placeholder="Enter Amount" />
+									</div>
+									<div class="form-group">
+										<label>Received by</label> <input type="text"
+											class="form-control form-control-solid" id="received_by"/>
+									</div>
+
+								</div>
+						<div class="card-footer">
+							<div class="row">
+								<div class="col-lg-3"></div>
+								<div class="col-lg-6">
+									<button type="submit" id="addPayment"
+										class="btn font-weight-bold btn-primary mr-2">Submit</button>
+									<button type="reset" class="btn font-weight-bold btn-secondary">Cancel</button>
+								</div>
+							</div>
+						</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<jsp:include page="../common/footer.jsp"></jsp:include>
+		</div>
+	</div>
+	</div>
+
+
+	<jsp:include page="../common/jsfiles.jsp"></jsp:include>
+	
+	
+	<script type="text/javascript">
+	
+	var basePath='<%=basePath%>';    
+	var base='<%=base%>'; 
+	
+	
+	var today = new Date();
+	var dd = String(today.getDate()).padStart(2, '0');
+	var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+	var yyyy = today.getFullYear();
+
+	today = dd + '/' + mm + '/' + yyyy;
+	
+	$('#paymentMode').hide();
+	
+	const queryString = window.location.search;
+	const urlParams = new URLSearchParams(queryString);
+	const patient_code = urlParams.get('pcode')
+	console.log(patient_code);
+	
+	
+	$.ajax({
+		url : base + "/dssAPI/dfapi/getPatientDetails",
+		type : "post",
+		dataType : "json",
+		async : false,
+		data : {"flag":1},
+		success:function(data)
+        {
+			if(data != null){
+				const row = data.find(d => d.patient_code == patient_code);
+				
+				console.log(row);
+				
+				if(row != null){
+					$('#patient_name').val(row.patient_name);
+					$('#patient_code').val(row.patient_code);
+					$('#mobile_no').val(row.mobile_no);
+					
+					
+					$('#received_by').val('Rakesh Bafna');
+				}
+			}
+
+        }
+	});	
+	
+	
+	$('#feesPaymentMode').change(function(){
+		var mode = $(this).val();
+		
+		if(mode == 'cash'){
+			$('#paymentMode').hide();
+		}else{
+			$('#paymentMode').show();
+			
+			if(mode == 'upi'){
+				$('#paymentMode').attr("placeholder", "Enter UPI Transaction Id");
+			}else if(mode == 'nb'){
+				$('#paymentMode').attr("placeholder", "Enter Transaction No");
+			}else{
+				$('#paymentMode').attr("placeholder", "Enter Account No");
+			}
+		}
+	});
+	
+	
+	$('#addPayment').click(function() {
+
+		var template_name = $('#template_name').val();
+		var template_code = $('#template_code').val();
+		var template_desc = jsonString;
+		var payment_date   = today;
+		var flag 		  = 1; // Addition
+									
+		
+		if(patient_code != '' || amount != ''){
+			$.ajax({
+				url : base + "/dssAPI/dfapi/insertUpdateMedicineTemplate",
+				type : "post",
+				dataType : "json",
+				async : false,
+				data : {
+					
+					"visit_id" : visit_id,
+					"patient_code" : patient_code,
+					"payment_date" : payment_date,
+					"payment_mode" : payment_mode,
+					"card_no" : card_no,
+					"payment_upi" : payment_upi,
+					"online_transaction_id" : online_transaction_id,
+					"amount" : amount,
+					"received_by" : received_by,
+					"flag" : flag
+				},
+				beforeSend : function() {
+					var btn = KTUtil.getById("addMedicineMaster");
+
+					KTUtil.addEvent(btn, "click", function() 
+							{KTUtil.btnWait(btn,"spinner spinner-right spinner-white pr-15","Please wait");
+										setTimeout(function() {KTUtil.btnRelease(btn);}, 1000);
+									});
+				},
+				error : function(xhr) {
+					var msg = "(insertMedicineTemplateMaster)Sorry but there was an error : "
+							+ xhr.status
+							+ " "
+							+ xhr.statusText;
+					alert(msg);
+				},
+				success : function(response) {
+					if (response != null) {
+
+						if (response >= 1) {
+
+							var msg = "Template Data inserted/Updated Successfully.";
+							alert(msg);
+
+						} else {
+							Swal.fire({
+												text : "Insertion/Updation failed!",
+												icon : "error",
+												buttonsStyling : false,
+												confirmButtonText : "Ok, got it!",
+												customClass : {
+													confirmButton : "btn font-weight-bold btn-light-primary"
+												}
+											}).then(function() {KTUtil.scrollTop();});
+						}
+					}
+				}
+
+			});
+		}
+
+	})
+"use strict";
+	
+	
+	
+	
+	</script>
+
+	
+</body>
+</html>
+
+
+<%
+	} catch (Exception e) {
+		Logger.log(dbConnVar, "" + e);
+	}
+%>

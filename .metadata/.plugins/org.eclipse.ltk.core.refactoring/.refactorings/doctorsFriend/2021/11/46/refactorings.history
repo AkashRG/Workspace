@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;doctorsFriend/WebRoot/form/home/prescriptionPrint1.jsp&apos; to &apos;prescription_module_print1.jsp&apos;" description="Rename resource &apos;prescriptionPrint1.jsp&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="WebRoot/form/home/prescriptionPrint1.jsp" name="prescription_module_print1.jsp" stamp="1636462889165" updateReferences="true"/>
+</session>

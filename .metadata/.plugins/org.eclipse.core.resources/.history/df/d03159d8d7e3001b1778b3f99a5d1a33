@@ -1,0 +1,259 @@
+package com.bakeshack.api;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Types;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import com.config.ConnectionFactory;
+import com.customLog.Logger;
+public class ConnectDataBean {
+	
+	private ConnectionFactory cf = null;
+	String dbConnVar = "BAKESHACK";  
+	
+	public ConnectDataBean() {
+		cf = new ConnectionFactory(dbConnVar);
+	}
+	
+	
+	public int insertUpdatUnit(String unit_desc,String unit_code,int unit_id, int flag) {
+		Connection con = null;
+		CallableStatement cs = null;
+		ResultSet rs = null;
+		
+		
+		int result=0;
+		try {
+
+			con = cf.getConnection();
+			cs = con.prepareCall("{?=call fun_crud_Unit(?,?,?)}");
+			cs.registerOutParameter(1, Types.INTEGER); 
+			cs.setString(2, unit_desc);
+			cs.setString(3, unit_code);
+			cs.setInt(4, unit_id);
+			cs.setInt(5, flag);
+			
+			cs.execute();
+			//rs = cs.getResultSet();
+
+			result=cs.getInt(1);
+			
+		} catch (Exception e) {
+			Logger.log(dbConnVar, e);
+		} finally {
+			try {
+				if (con != null) {
+					cf.freeConnection(con);
+					con.close();
+				}
+				if (cs != null) {
+					cs.close();
+				}
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e1) {
+				Logger.log(dbConnVar, e1);
+			}
+		}
+
+		return result;
+	}
+
+	public JSONArray getUnitDetails() {
+		Connection con = null;
+		CallableStatement cs = null;
+		ResultSet rs = null;
+		
+		JSONArray jarr =null;
+		JSONObject finaljson = null;
+		String unit_id="",unit_desc="",unit_code="";
+
+
+		try {
+			jarr=new JSONArray();
+			con = cf.getConnection();
+			cs = con.prepareCall("{?=call fun_retrieve_unit_details(?,?,?,?)}");
+			cs.registerOutParameter(1, Types.OTHER);
+			cs.setObject(2, rs);
+			cs.setObject(3, rs);
+			cs.setObject(4, rs);
+			
+			
+			
+		 	con.setAutoCommit(false); // without this the Result set is not returning
+		 	cs.execute();
+		 	rs =  (ResultSet) cs.getObject(1);
+		 				
+			while (rs.next()) {
+				JSONObject resultjson = new JSONObject();
+								
+				unit_id = rs.getString(1);
+				unit_desc  = rs.getString(2);
+				unit_code = rs.getString(3);
+				
+				resultjson.put("unit_id", unit_id);
+				resultjson.put("unit_desc", unit_desc);
+				resultjson.put("unit_code", unit_code);
+												
+				jarr.put(resultjson);
+			}	 
+			
+			finaljson = new JSONObject();
+			
+			finaljson.put("data", jarr);
+			
+		} catch (Exception e) {
+			Logger.log(dbConnVar, e);
+		} finally {
+			try {
+				if (con != null) {
+					con.close();
+				}
+				if (cs != null) {
+					cs.close();
+				}
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e1) {
+				Logger.log(dbConnVar, e1);
+			}
+		}
+
+		return jarr;
+	}	
+
+	public int insertUpdatProduct(String product_code,String subcategory,String product_desc,String selling_price,String unit, int product_id, int flag) {
+		Connection con = null;
+		CallableStatement cs = null;
+		ResultSet rs = null;
+		
+		
+		int result=0;
+		try {
+
+			con = cf.getConnection();
+			cs = con.prepareCall("{?=call fun_crud_Product(?,?,?,?,?,)}");
+			cs.registerOutParameter(1, Types.INTEGER);
+			cs.setString(2, product_code);
+			cs.setString(3, subcategory);
+			cs.setString(4, product_desc);
+			cs.setString(5, selling_price);
+			cs.setString(6, unit);
+            cs.setInt(7, product_id);
+			cs.setInt(8, flag);
+			
+			cs.execute();
+			//rs = cs.getResultSet();
+
+			result=cs.getInt(1);
+			
+		} catch (Exception e) {
+			Logger.log(dbConnVar, e);
+		} finally {
+			try {
+				if (con != null) {
+					cf.freeConnection(con);
+					con.close();
+				}
+				if (cs != null) {
+					cs.close();
+				}
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e1) {
+				Logger.log(dbConnVar, e1);
+			}
+		}
+
+		return result;
+	}
+
+	public JSONArray getProductDetails() {
+		Connection con = null;
+		CallableStatement cs = null;
+		ResultSet rs = null;
+		
+		JSONArray jarr =null;
+		JSONObject finaljson = null;
+		String product_id="",product_code="",subcategory="",product_desc="",selling_price="",unit="";
+
+
+		try {
+			jarr=new JSONArray();
+			con = cf.getConnection();
+			cs = con.prepareCall("{?=call fun_retrieve_product_details(?,?,?,?,?,?)}");
+			cs.registerOutParameter(1, Types.OTHER);
+			cs.setObject(2, rs);
+			cs.setObject(3, rs);
+			cs.setObject(4, rs);
+			cs.setObject(5, rs);
+			cs.setObject(6, rs);
+			cs.setObject(7, rs);
+			
+			
+			
+			
+		 	con.setAutoCommit(false); // without this the Result set is not returning
+		 	cs.execute();
+		 	rs =  (ResultSet) cs.getObject(1);
+		 				
+			while (rs.next()) {
+				JSONObject resultjson = new JSONObject();
+								
+				product_id = rs.getString(1);
+				product_code  = rs.getString(2);
+				subcategory = rs.getString(3);
+				product_desc = rs.getString(4);
+				selling_price = rs.getString(5);
+				unit = rs.getString(6);
+				
+				resultjson.put("product_id", product_id);
+				resultjson.put("product_code",product_code);
+				resultjson.put("subcategory", subcategory);
+				resultjson.put("product_desc", product_desc);
+				resultjson.put("selling_price", selling_price);
+				resultjson.put("unit", unit);
+												
+				jarr.put(resultjson);
+			}	 
+			
+			finaljson = new JSONObject();
+			
+			finaljson.put("data", jarr);
+			
+		} catch (Exception e) {
+			Logger.log(dbConnVar, e);
+		} finally {
+			try {
+				if (con != null) {
+					con.close();
+				}
+				if (cs != null) {
+					cs.close();
+				}
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e1) {
+				Logger.log(dbConnVar, e1);
+			}
+		}
+
+		return jarr;
+	}	
+
+
+
+}
+	
+
+
+
+}

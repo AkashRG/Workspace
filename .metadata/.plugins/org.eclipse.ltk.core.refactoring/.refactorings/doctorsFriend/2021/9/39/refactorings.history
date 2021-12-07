@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;doctorsFriend/WebRoot/form/home/demo2.jsp&apos; to &apos;Track_pad.jsp&apos;" description="Rename resource &apos;demo2.jsp&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="WebRoot/form/home/demo2.jsp" name="Track_pad.jsp" stamp="1632488117776" updateReferences="true"/>
+</session>

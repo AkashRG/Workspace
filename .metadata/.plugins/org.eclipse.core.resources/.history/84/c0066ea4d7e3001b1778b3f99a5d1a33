@@ -1,0 +1,210 @@
+package com.bakeshack.api;
+
+import javax.ws.rs.Path;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
+import javax.ws.rs.POST;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+import org.json.JSONObject;
+
+import com.customLog.*;
+
+@Path("/api")
+public class ConnectAPI {
+	
+	 @POST
+		@Path("/checkLoginDetails")
+		@Produces(MediaType.TEXT_PLAIN)
+		@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+		public String getAdminLoginDetails(@FormParam("UserName") String UserName,
+				@FormParam("Password") String Password) { 
+			
+			ConnectDataBean bean= null;
+			JSONObject beanData = new JSONObject();
+			try { 
+				bean     = new ConnectDataBean();
+				beanData = bean.getUsersDetails(UserName, Password);
+				
+			} catch (Exception e) {
+				System.out.println(e);
+				Logger.log("", e);
+			}
+
+			return beanData.toString();
+		}
+	 
+	 
+	 @POST
+		@Path("/crudCategory")
+		@Produces(MediaType.TEXT_PLAIN)
+		@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+		public int crudCategory(@FormParam("input_str") String inputStr,
+				@FormParam("flag") String flag) { 
+			int result = 0;
+			ConnectDataBean bean= null;			
+			try { 
+				bean     = new ConnectDataBean();
+				result   = bean.crudCategory(inputStr, flag);
+			
+			} catch (Exception e) {
+				
+				Logger.log("", e);
+			}
+
+			return result;
+		}
+	 
+	 
+	 
+	 @POST
+		@Path("/crudSubCategory")
+		@Produces(MediaType.TEXT_PLAIN)
+		@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+		public int crudSubCategory(@FormParam("input_str") String inputStr,
+				@FormParam("flag") String flag) { 
+			int result = 0;
+			ConnectDataBean bean= null;			
+			try { 
+				bean     = new ConnectDataBean();
+				result   = bean.crudSubCategory(inputStr, flag);
+			
+			} catch (Exception e) {
+				
+				Logger.log("", e);
+			}
+
+			return result;
+		}
+	 
+	 
+	 @POST
+		@Path("/crudUnit")
+		@Produces(MediaType.TEXT_PLAIN)
+		@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+		public int crudUnit(@FormParam("input_str") String inputStr,
+				@FormParam("flag") String flag) { 
+			int result = 0;
+			ConnectDataBean bean= null;			
+			try { 
+				bean     = new ConnectDataBean();
+				result   = bean.crudUnit(inputStr, flag);
+			
+			} catch (Exception e) {
+				
+				Logger.log("", e);
+			}
+
+			return result;
+		}
+	 
+	
+	 @POST
+		@Path("/crudProduct")
+		@Produces(MediaType.TEXT_PLAIN)
+		@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+		public int crudProduct(@FormParam("input_str") String inputStr,
+				@FormParam("flag") String flag) { 
+			int result = 0;
+			ConnectDataBean bean= null;			
+			try { 
+				bean     = new ConnectDataBean();
+				result   = bean.crudProduct(inputStr, flag);
+			
+			} catch (Exception e) {
+				
+				Logger.log("", e);
+			}
+
+			return result;
+		}
+	 
+	 
+	 
+	 @POST
+		@Path("/retrieveCategory")
+		@Produces(MediaType.TEXT_PLAIN)
+		@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+		public String retrieveCategory() { 
+			
+			ConnectDataBean bean= null;
+			JSONObject beanData = new JSONObject();
+			try { 
+				bean     = new ConnectDataBean();
+				beanData = bean.retrieveCategory();
+				
+			} catch (Exception e) {
+				System.out.println(e);
+				Logger.log("", e);
+			}
+
+			return beanData.toString();
+		}
+	 
+	 
+	 @POST
+		@Path("/retrieveSubCategory")
+		@Produces(MediaType.TEXT_PLAIN)
+		@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+		public String retrieveSubCategory() { 
+			
+			ConnectDataBean bean= null;
+			JSONObject beanData = new JSONObject();
+			try { 
+				bean     = new ConnectDataBean();
+				beanData = bean.retrieveSubCategory();
+				
+			} catch (Exception e) {
+				System.out.println(e);
+				Logger.log("", e);
+			}
+
+			return beanData.toString();
+		}
+
+	 
+	 @POST
+		@Path("/retrieveUnit")
+		@Produces(MediaType.TEXT_PLAIN)
+		@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+		public String retrieveUnit() { 
+			
+			ConnectDataBean bean= null;
+			JSONObject beanData = new JSONObject();
+			try { 
+				bean     = new ConnectDataBean();
+				beanData = bean.retrieveUnit();
+				
+			} catch (Exception e) {
+				System.out.println(e);
+				Logger.log("", e);
+			}
+
+			return beanData.toString();
+		}
+	 
+	 
+	 @POST
+		@Path("/retrieveProduct")
+		@Produces(MediaType.TEXT_PLAIN)
+		@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+		public String retrieveProduct() { 
+			
+			ConnectDataBean bean= null;
+			JSONObject beanData = new JSONObject();
+			try { 
+				bean     = new ConnectDataBean();
+				beanData = bean.retrieveProduct();
+				
+			} catch (Exception e) {
+				System.out.println(e);
+				Logger.log("", e);
+			}
+
+			return beanData.toString();
+		}
+
+
+}

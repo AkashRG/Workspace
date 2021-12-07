@@ -1,0 +1,128 @@
+package com.bakeshack.api;
+
+import javax.ws.rs.Path;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
+import javax.ws.rs.POST;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+import org.json.JSONObject;
+
+import com.customLog.*;
+
+@Path("/api")
+public class ConnectAPI {
+	
+	 @POST
+		@Path("/insertUpdateCategory")
+		@Produces(MediaType.TEXT_PLAIN)
+		@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+		public int insertUpdateCategory(
+				@FormParam("category_name") String category_name,
+				@FormParam("category_code") String category_code,
+				@FormParam("inv_flag") String inv_flag,
+				@FormParam("sale_flag") String sale_flag,
+				@FormParam("category_id") int category_id,
+				@FormParam("flag") int flag) { 
+			ConnectDataBean bean= null;
+			int beanData = 0;
+			try { 
+				System.out.println("Category name in api : "+ category_name);
+				
+				Logger.log("BAKESHACK","Category name:: "+ category_name);
+			
+				bean = new ConnectDataBean();
+				beanData = bean.insertUpdateCategory(category_name, category_code, inv_flag, sale_flag, category_id, flag);
+				Logger.log("BAKESHACK","beandata:: "+beanData);
+				
+				if(beanData>0) {
+					
+				}
+			} catch (Exception e) {
+				System.out.println(e);
+				Logger.log("BAKESHACK", e);
+			}
+
+			return beanData;
+		}
+	 
+	 @POST
+		@Path("/getCategoryDetails")
+		@Produces(MediaType.TEXT_PLAIN)
+		@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+		public String getCategoryDetails() { 
+			
+			ConnectDataBean bean= null;
+			String beanData = null;
+			try { 
+				System.out.println("getCategoryDetails");
+				
+				bean = new ConnectDataBean();
+				beanData = bean.getCategoryDetails().toString();
+				Logger.log("BAKESHACK","beandata:: "+beanData);
+												
+			} catch (Exception e) {
+				System.out.println(e);
+				Logger.log("BAKESHACK", e);
+			}
+
+			return beanData;
+		}
+//unit details
+
+	 @POST
+		@Path("/insertUpdateUnit")
+		@Produces(MediaType.TEXT_PLAIN)
+		@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+		public int insertUpdateUnit(
+				@FormParam("unit_desc") String unit_desc,
+				@FormParam("unit_code") String unit_code,
+				@FormParam("unit_id") int unit_id,
+				@FormParam("flag") int flag) { 
+			ConnectDataBean bean= null;
+			int beanData = 0;
+			try { 
+				System.out.println("unit_desc in api : "+ unit_desc);
+				
+				Logger.log("BAKESHACK","Unit Desc:: "+ unit_desc);
+			
+				bean = new ConnectDataBean();
+				beanData = bean.insertUpdateUnit(unit_desc, unit_code, unit_id, flag);
+				Logger.log("BAKESHACK","beandata:: "+beanData);
+				
+				if(beanData>0) {
+					
+				}
+			} catch (Exception e) {
+				System.out.println(e);
+				Logger.log("BAKESHACK", e);
+			}
+
+			return beanData;
+		}
+	 
+	 @POST
+		@Path("/getUnitDetails")
+		@Produces(MediaType.TEXT_PLAIN)
+		@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+		public String getUnitDetails() { 
+			
+			ConnectDataBean bean= null;
+			String beanData = null;
+			try { 
+				System.out.println("getCategoryDetails");
+				
+				bean = new ConnectDataBean();
+				beanData = bean.getUnitDetails().toString();
+				Logger.log("BAKESHACK","beandata:: "+beanData);
+												
+			} catch (Exception e) {
+				System.out.println(e);
+				Logger.log("BAKESHACK", e);
+			}
+
+			return beanData;
+		}
+}

@@ -1,0 +1,255 @@
+<jsp:include page="/form/common/header.jsp"></jsp:include>
+
+<div class="wrapper">
+	<jsp:include page="/form/common/sidebar.jsp"></jsp:include>
+	<!-- navbar -->
+	<jsp:include page="/form/common/navbar.jsp"></jsp:include>
+	<!-- navbar end -->
+
+	<div class="container">
+
+		<div id="smartwizard">
+			<ul class="nav">
+				<li><a class="nav-link" href="#step-1"> Step 1 </a></li>
+				<li><a class="nav-link" href="#step-2"> Step 2 </a></li>
+				<li><a class="nav-link" href="#step-3"> Step 3 </a></li>
+				<li><a class="nav-link" href="#step-4"> Step 4 </a></li>
+				<li><a class="nav-link" href="#step-5"> Step 5 </a></li>
+			</ul>
+
+			<form action="">
+				<div class="tab-content">
+					<div id="step-1" class="tab-pane" role="tabpanel">
+
+						<h4>Patient Details:</h4>
+
+						<div class="col-md-12">
+							<div class="row">
+								<div class="row col-md-6 g-3">
+									<div class="col-auto">
+										<label class="col-form-label">Date</label>
+									</div>
+									<div class="col-md-8 d-flex">
+										<input type="date" id="date" class="form-control">
+									</div>
+								</div>
+								<div class="row col-md-6 g-3">
+									<div class="col-auto">
+										<label class="col-form-label">Aadhar No</label>
+									</div>
+									<div class="col-md-8">
+										<input type="text" class="form-control">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="row col-md-6 g-3">
+									<div class="col-auto">
+										<label class="col-form-label">Patient Name</label>
+									</div>
+									<div class="col-md-8">
+										<input type="text" class="form-control">
+									</div>
+								</div>
+								<div class="row col-md-6 g-3">
+									<div class="col-auto">
+										<label class="col-form-label">Date of Birth</label>
+									</div>
+									<div class="col-md-8  d-flex">
+										<input type="date" id="dob" class="form-control">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="row col-md-6 g-3">
+									<div class="col-auto">
+										<label class="col-form-label">Age</label>
+									</div>
+									<div class="col-md-8">
+										<input type="text" id="age" class="form-control">
+									</div>
+								</div>
+								<div class="row col-md-6 g-3">
+									<div class="col-auto">
+										<label for="inputtext6" class="col-form-label">Blood
+											Group</label>
+									</div>
+									<div class="col-md-8">
+										<select class="form-select">
+											<option selected>Select Blood Group</option>
+											<option value="o+">O+</option>
+											<option value="a+">A+</option>
+											<option value="b+">B+</option>
+											<option value="ab+">AB+</option>
+											<option value="o-">O-</option>
+											<option value="a-">A-</option>
+											<option value="b-">B-</option>
+											<option value="ab-">AB-</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="row col-md-6 g-3">
+									<div class="col-auto">
+										<label for="inputtext6" class="col-form-label">Village</label>
+									</div>
+									<div class="col-md-8">
+										<select class="form-select">
+											<option selected>Select Village</option>
+											<option value="pune">Pune</option>
+											<option value="mumbai">Mumbai</option>
+											<option value="ahmednagar">Ahmednagar</option>
+										</select>
+									</div>
+								</div>
+								<div class="row col-md-6 g-3">
+									<div class="col-auto">
+										<label for="inputtext6" class="col-form-label">Mobile
+											No</label>
+									</div>
+									<div class="col-md-8">
+										<input type="text" class="form-control">
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<div id="step-2" class="tab-pane" role="tabpanel">
+						<h4>Vital Details:</h4>
+
+						<div class="col-md-12">
+							<div class="row">
+								<div class="row col-md-6 g-3">
+									<div class="col-auto">
+										<label class="col-form-label">Pulse</label>
+									</div>
+									<div class="col-md-8 d-flex">
+										<input type="text" class="form-control">
+									</div>
+								</div>
+								<div class="row col-md-6 g-3">
+									<div class="col-auto">
+										<label class="col-form-label">BP</label>
+									</div>
+									<div class="col-md-8">
+										<input type="text" class="form-control">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="row col-md-6 g-3">
+									<div class="col-auto">
+										<label class="col-form-label">Weight</label>
+									</div>
+									<div class="col-md-8 d-flex">
+										<input type="text" class="form-control">
+									</div>
+								</div>
+								<div class="row col-md-6 g-3">
+									<div class="col-auto">
+										<label class="col-form-label">Height</label>
+									</div>
+									<div class="col-md-8">
+										<input type="text" class="form-control">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="row col-md-6 g-3">
+									<div class="col-auto">
+										<label class="col-form-label">HB</label>
+									</div>
+									<div class="col-md-8 d-flex">
+										<input type="text" class="form-control">
+									</div>
+								</div>
+								<div class="row col-md-6 g-3">
+									<div class="col-auto">
+										<label class="col-form-label">Temp</label>
+									</div>
+									<div class="col-md-8">
+										<input type="text" class="form-control">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="row col-md-6 g-3">
+									<div class="col-auto">
+										<label class="col-form-label">Sugar</label>
+									</div>
+									<div class="col-md-8 d-flex">
+										<input type="text" class="form-control">
+									</div>
+								</div>
+								<div class="row col-md-6 g-3">
+									<div class="col-auto">
+										<label class="col-form-label">Other</label>
+									</div>
+									<div class="col-md-8">
+										<input type="text" class="form-control">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="step-3" class="tab-pane" role="tabpanel">
+						<div class="col md 12">
+							<div class="row">
+								<div class="row col-md-6 g-3">
+									<div class="col-auto">
+										<label class="col-form-label">Complaints</label>
+									</div>
+									<div class="col-md-8">
+										<select class="form-select">
+											<option selected>Select Complaints</option>
+											<option value="1">Complaints 1</option>
+											<option value="2">Complaints 2</option>
+											<option value="1">Complaints 3</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="row col-md-6 g-3">
+									<div class="col-auto">
+										<label class="col-form-label">Other Complaints</label>
+									</div>
+									<div class="col-md-8">
+										<input type="text" class="form-control">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="row col-md-6 g-3">
+									<div class="col-auto">
+										<label class="col-form-label">Diagnosis</label>
+									</div>
+									<div class="col-md-8">
+										<select class="form-select">
+											<option selected>Select Diagnosis</option>
+											<option value="1">Diagnosis 1</option>
+											<option value="2">Diagnosis 2</option>
+											<option value="1">Diagnosis 3</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="step-4" class="tab-pane" role="tabpanel">Step
+						content</div>
+					<div id="step-5" class="tab-pane" role="tabpanel">Step
+						content</div>
+				</div>
+			</form>
+		</div>
+
+	</div>
+</div>
+
+
+<jsp:include page="common/footer.jsp"></jsp:include>
+</body>
+</html>

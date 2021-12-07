@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;bakeshackWeb/WebContent/form/home/transaction-master.jsp&apos; to &apos;production-master.jsp&apos;" description="Rename resource &apos;transaction-master.jsp&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="WebContent/form/home/transaction-master.jsp" name="production-master.jsp" stamp="1626847770597" updateReferences="true"/>
+</session>
